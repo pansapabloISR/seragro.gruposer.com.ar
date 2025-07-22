@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+<html lang="en" class="fixed sidebar-left-collapsed">
+
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="csrf-token" content="4mIXF0bSM8KB4SLyoiqOelGwfYI6wTRJ9KZm7JlH">
+<title>Tekron</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link href="/global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/layout.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/components.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/custom.css?v=1.17" rel="stylesheet" type="text/css">
+
+
+
+<script src="/global_assets/js/main/jquery.min.js"></script>
+<script src="/global_assets/js/main/bootstrap.bundle.min.js"></script>
+<script src="/global_assets/js/plugins/loaders/blockui.min.js"></script>
+<script src="/global_assets/js/plugins/ui/ripple.min.js"></script>
+<script src="https://kit.fontawesome.com/14b830158f.js" crossorigin="anonymous"></script>
+
+
+    <!-- Theme JS files -->
+    <script src="/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script src="/global_assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="/global_assets/js/demo_pages/datatables_advanced.js"></script>
+    <!-- /theme JS files -->
+<script src="/assets/js/app.js"></script>
+
+</head><body class="navbar-top-new">
+
+	
+	<div class="page-content">
+		
+		<div class="content-wrapper">
+			
+			<div class="page-header">
+
+<div class="main_header pt-3 pb-3">
+    <img class="px-2" style="width:180px;" src="../../../../global_assets/images/main/LogoTektro-02.png">
+    <span id="">MASTER DEALER OFICIAL DE DRONES AGRÍCOLAS</span>
+</div>
+    <!-- Secondary navbar -->
+    <div id="navbar" class="navbar navbar-expand-lg border-transparent custom-navbar">
+
+
+
+        <div id="logo-navigator" class="d-flex justify-content-between align-items-center ">
+            <div id="logo" class="navbar-img mr-3">
+                <a href="../" class="d-inline-block">
+
+
+
+                                            <img class="px-2" style="width:250px;" src="../../../../global_assets/images/main/dji_logo_verde.png">
+                    
+                </a>
+            </div>
+            <div class="text-center d-lg-none ">
+                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
+                    data-target="#navbar-navigation">
+                    <i class="icon-paragraph-justify3"></i>
+
+                </button>
+            </div>
+        </div>
+
+
+
+        <div class="navbar-collapse collapse" id="navbar-navigation">
+            <ul class="navbar-nav navbar-nav-highlight ">
+                <!-- <li class="nav-item">
+						<a href="../full/index.html" class="navbar-nav-link">
+							<i class="icon-home4 mr-2"></i>
+							Dashboard
+						</a>
+					</li> -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle  active" href="#"
+                        id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="false"
+                        aria-expanded="false">
+                        Drones
+                        <i class="fa fa-sort-down"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-dji-custom" aria-labelledby="navbarDropdown">
+
+                                                            <a href="/drones/mavic-3m" class="dropdown-item">MAVIC 3M</a>
+                                                            <a href="/drones/agras-t50" class="dropdown-item">AGRAS T50</a>
+                                                            <a href="/drones/agras-t25" class="dropdown-item">AGRAS T25</a>
+                                                            <a href="/drones/agras-t100" class="dropdown-item">AGRAS T100</a>
+                            
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle " href="/accesorios"
+                        id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"
+                        >
+                        Accesorios
+                        <i class="fa fa-sort-down"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-dji-custom" aria-labelledby="navbarDropdown">
+                        <a href="/accesorios" class="dropdown-item">Ver todos</a>
+
+                                                    <a href="/accesorios/cargador" class="dropdown-item">Baterias y Cargadores</a>
+                                                    <a href="/accesorios/generadores_carga" class="dropdown-item">Aspersores y Tanques</a>
+                                                    <a href="/accesorios/controles" class="dropdown-item">Complementos Comunes</a>
+                                            </div>
+                </li>
+                <li class="nav-item ">
+                    <a href="/postventa" class="nav-link  ">
+                        Servicio Post-Venta
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/reseller" class="nav-link ">
+                        Quiero ser Distribuidor
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/capacitaciones" class="nav-link ">
+                        Capacitaciones
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/noticias" class="nav-link ">
+                        Noticias
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/descargas" class="nav-link ">
+                        Descargas
+                    </a>
+                </li>
+            </ul>
+
+
+            <ul class="navbar-nav navbar-nav-highlight ">
+                <li class="nav-ite">
+                    <a href="https://www.instagram.com/tekron_dji_drones"  class="nav-link icono-menu legitRipple">
+                        <img class="" style="width:25px;" src="../../../../global_assets/images/iconoRRSS-01.png">
+
+                    </a>
+                </li>
+                <li class="nav-ite">
+                    <a href="https://www.facebook.com/profile.php?id=61567468266854"  class="nav-link icono-menu  legitRipple">
+                        <img class="" style="width:25px;" src="../../../../global_assets/images/iconoRRSS-02.png">
+                </a>
+                </li>
+                <li class="nav-ite">
+                    <a href="https://www.linkedin.com/company/tekron-argentina"  class="nav-link icono-menu  legitRipple">
+                        <img class="" style="width:25px;" src="../../../../global_assets/images/iconoRRSS-03.png">
+                </a>
+                </li>
+            </ul>
+
+
+            <ul class="navbar-nav navbar-nav-highlight ">
+                <li class="nav-item">
+                    <a href="/contacto"  class="nav-link  legitRipple">
+                        <span  class="link-main"  id="">Contactanos</span>
+                </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- /secondary navbar -->
+</div>
+			
+			
+
+			<div id="main-content">
+				
+<style>
+   .prod-row_functions_title,
+   .prod-row_functions_detail{
+        color: #ffffff;
+    }
+
+    hr.solid{
+        border-top: 2px solid #ffffff;
+    }
+
+</style>
+
+
+<section class="section-producto">
+<div id="producto" class="producto-container">
+    <div>
+
+        <video  class="w-100" autoplay muted loop>
+                                <source src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/VideoPaginaT100.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+        </video>
+
+        <div  style="background-image: url('https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/T100-SlideHome.jpg')"  class="prod-main-img">
+
+            <div class="" style="color:#ffffff;">
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-10 ">
+                    <div class="prod-main-img_title"><span><b>AGRAS</b> T100<span></div>
+
+                    <div class="prod-main-img_subtitle mt-2 mb-2"><span><b>
+                        MÁXIMA CAPACIDAD, MÁXIMO RENDIMIENTO
+                                </b><span></div>
+
+                    <div class="prod-main-img_text col-lg-6 p-0 pt-1">
+                        <p>
+                            Un dron revolucionario que lleva 12 años de desarrollo. con una capacidad máxima de carga útil de 100 kg. Duplica la eficiencia operativa brindando una experiencia inteligente y segura.
+                        </p>
+                    </div>
+
+                    <div class="mt-3 mb-3">
+                        <a href="https://wa.me/+5493564200433" class="drone_button">¡Lo Quiero!</a>
+                    </div>
+
+                    <div class="drone_tutorial_div">
+
+                                                                                         </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="prod-funciones_main" style="background-color:#000000;">>
+
+            <div class="prod-row_functions row d-flex justify-content-around">
+                <div class="col-lg-3 row_functions_item">
+                    <div class="prod-row_functions_title">  ALTA EFICIENCIA DE PULVERIZADO</div>
+                    <hr class="solid" />
+                    <div class="prod-row_functions_detail">
+                        Pulverizacion de 100L
+                    </div>
+
+                </div>
+                <div class="col-lg-3 row_functions_item">
+                    <div class="prod-row_functions_title">  GRAN VELOCIDAD DE ESPARCIMIENTO</div>
+                    <hr class="solid" />
+                    <div class="prod-row_functions_detail">
+                        Caudal de 400 Kg/min con capacidad de 150L
+
+                    </div>
+
+                </div>
+                <div class="col-lg-3 row_functions_item">
+                    <div class="prod-row_functions_title">  GRAN CAPACIDAD DE CARGA</div>
+                    <hr class="solid" />
+                    <div class="prod-row_functions_detail">
+                        Elevación de hasta 100kg de peso
+
+                    </div>
+                </div>
+
+            </div>
+
+            <img class="w-100"   src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/T100-Caracteristicas.jpg" />
+
+            <div class="prod-row_functions row d-flex justify-content-around ">
+                <div class="col-lg-3 row_functions_item">
+                    <div class="prod-row_functions_title">  SISTEMA DE SEGURIDAD LIDER</div>
+                    <hr class="solid" />
+                    <div class="prod-row_functions_detail">
+                        LiDAR y Radar de Onda Milimétrica
+
+                    </div>
+
+                </div>
+                <div class="col-lg-3 row_functions_item">
+                    <div class="prod-row_functions_title">  CARGA RAPIDA Y ECONÓMICA</div>
+                    <hr class="solid" />
+                    <div class="prod-row_functions_detail">
+                        Baterias de 41 Ah
+
+                    </div>
+
+                </div>
+                <div class="col-lg-3 row_functions_item">
+                    <div class="prod-row_functions_title">  SEÑAL SIN OBSTRUCCIONES</div>
+                    <hr class="solid" />
+                    <div class="prod-row_functions_detail">
+                        Transmision O4 resistente a interferencias
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div id="prod_features">
+
+                <div class="prod_features_container">
+
+                
+
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-12">
+
+                                                    <img class="image_feature_prod" src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/go3LLY2QP13wSbHExQZ5u41gTliQnJEOJ9dqiHTS.jpg" />
+
+                        
+
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex  justify-content-start">
+
+                        <div class="prod_features_container_item">
+
+                            <div class="prod_features_container_item_title">
+                                Pulverización de alto volumen de agua, alta eficiencia.
+                            </div>
+                            <div class="prod_features_container_item_detalle">
+                                <p>- 100 Lgran capacidad</p>
+
+<p>- Ancho de pulverizaci&oacute;n regular de 10 m, velocidad de 13.8 m/s</p>
+
+<p>- Caudal alto de 30L/min (Con 2 aspersores est&aacute;ndares)</p>
+
+<p>- Caudal alto de 40L/min (opcional, Con 4 aspersores)</p>
+
+<p>- Nebulizaci&oacute;n refrigerada por agua con 4 boquillas, rango de tama&ntilde;o de gota 50&ndash;500 &micro;m (opcional)</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-12">
+
+                                                    <img class="image_feature_prod" src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/5n6lvHSwuxEg3m3XxHO5kYKyMNFfcryWmvdOpC7s.jpg" />
+
+                        
+
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex  justify-content-start">
+
+                        <div class="prod_features_container_item">
+
+                            <div class="prod_features_container_item_title">
+                                Gran capacidad de esparcimiento rápido
+                            </div>
+                            <div class="prod_features_container_item_detalle">
+                                <p>- Capacidad de 150 L</p>
+
+<p>- Caudal alto de 400 kg/min</p>
+
+<p>- Alimentador de tornillo completamente nuevo, doble precisi&oacute;n de caudal</p>
+
+<p>- Ancho efectivo de esparcimiento de 10 m</p>
+
+<p>- Eficiencia de esparcimiento aumentada en un 66 %&nbsp;</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-12">
+
+                                                    <img class="image_feature_prod" src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/q3WLNiDGaglV2Yt5JxpRrGDXdgQdHNJptefFe1KB.jpg" />
+
+                        
+
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex  justify-content-start">
+
+                        <div class="prod_features_container_item">
+
+                            <div class="prod_features_container_item_title">
+                                Sistema de seguridad líder en la industria
+                            </div>
+                            <div class="prod_features_container_item_detalle">
+                                <p>- El LiDAR y el radar de onda milim&eacute;trica</p>
+
+<p>- Sistema Penta-Vision</p>
+
+<p>- Detecci&oacute;n de Tipo de obst&aacute;culos</p>
+
+<p>- Memoria autom&aacute;tica de posici&oacute;n de obst&aacute;culos, aumentando la seguridad con cada vuelo</p>
+
+<p>- Pantalla de asistencia de seguridad AR</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-12">
+
+                                                    <img class="image_feature_prod" src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/v9HTnCtI3iz8UpordHQB0BwNSwbUepk6LxzBzloP.jpg" />
+
+                        
+
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex  justify-content-start">
+
+                        <div class="prod_features_container_item">
+
+                            <div class="prod_features_container_item_title">
+                                Tu asistente de transporte
+                            </div>
+                            <div class="prod_features_container_item_detalle">
+                                <p data-end="1130" data-start="1089">- Capacidad de carga grande de 100 kg [⁵]</p>
+
+<p data-end="1157" data-start="1133">- Balanza en tiempo real</p>
+
+<p data-end="1194" data-start="1160">- Control de equilibrio autom&aacute;tico</p>
+
+<p data-end="1246" data-start="1197">- Marcado de puntos de carga y descarga por m&oacute;vil</p>
+
+<p data-end="1297" data-start="1249">- Soporta Versi&oacute;n de Bater&iacute;a &Uacute;nica/Doble Bater&iacute;a</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-12">
+
+                                                    <img class="image_feature_prod" src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/AOHiEEV8w0Unud2nhtzubrZFX18ca6qW4FwjqkrC.jpg" />
+
+                        
+
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex  justify-content-start">
+
+                        <div class="prod_features_container_item">
+
+                            <div class="prod_features_container_item_title">
+                                Carga rápida, económica y de ahorro de energía
+                            </div>
+                            <div class="prod_features_container_item_detalle">
+                                <p>- Bater&iacute;a de 41 Ah</p>
+
+<p>- Conector de alta potencia de 500 A</p>
+
+<p>- Dise&ntilde;o de bater&iacute;a montada en la parte frontal, resistente a la corrosi&oacute;n</p>
+
+<p>- Garant&iacute;a de 1 a&ntilde;o o 1,500 ciclos</p>
+
+<p>- Sistema de enfriamiento de triple canal de aire&nbsp;para una r&aacute;pida dispersi&oacute;n del calor</p>
+
+<p>- Mango ergon&oacute;mico</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+                <div class="row mb-2">
+                    <div class="col-lg-6 col-12">
+
+                                                    <img class="image_feature_prod" src="https://akron-storage.nyc3.digitaloceanspaces.com/akron-dji/VXcuwL59TtpRi4SyBd0ubXXdjcPU2qxDslocM8Xr.jpg" />
+
+                        
+
+                    </div>
+
+                    <div class="col-lg-6 col-12 d-flex  justify-content-start">
+
+                        <div class="prod_features_container_item">
+
+                            <div class="prod_features_container_item_title">
+                                Señal fuerte, sin miedo a obstrucciones
+                            </div>
+                            <div class="prod_features_container_item_detalle">
+                                <p>- Transmisi&oacute;n O4 resiste interferencias,&nbsp;proporcionando im&aacute;genes suaves y estables</p>
+
+<p>- Relevo O4, no afectado por obstrucciones monta&ntilde;osas</p>
+
+<p>- D-RTK 3 AG que permite un posicionamiento a nivel centim&eacute;trico plug-and-play sin necesidad de configurar coordenadas</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+			</div>
+			
+			
+		<footer class="site-footer custom-dji-footer" >
+    <div class="main-footer custom-dji-footer">
+        <div class="container">
+            <div class="row custom-align-items">
+                <div class="col-xs-12 col-md-6 col-lg-3 custom-footer-content">
+                    <div class="footer-widget about-widget mb-2">
+
+                        <img class="akron-img-footer "  src="../../../../global_assets/images/main/LogoTektro-02.png" alt="Logo Tekron" />
+
+                    </div><!-- /.footer-widget -->
+                    <div class="mb-2">
+                    <img src="../../../../global_assets/images/main/dji_logo_blanco.png" alt="Logo DJI" >
+                    </div>
+                    <div>
+                        MASTER DEALER DE DRONES AGRÍCOLAS
+                    </div>
+                    <div>
+                        <div class="widget-title mt-3">
+                            <h3>+54 9 3564 200433</h3>
+                        </div><!-- /.widget-title -->
+
+                        <div class="widget-title mt-3">
+                            <div class="font-weight-bold">Parque Industrial, San Francisco, <br> Cordoba, Argentina</div>
+                        </div><!-- /.widget-title -->
+                    </div>
+                </div><!-- /.col-lg-3 -->
+                <div class="col-xs-12 col-md-6 col-lg-3 custom-footer-content">
+                    <div class="footer-widget links-widget custom-footer-content-navigation custom-footer-conten-center">
+                        <div class="widget-title">
+                            <h3>Navegación</h3>
+                        </div><!-- /.widget-title -->
+                        <div class="link-wrapper clearfix">
+                                                            <ul class="link-lists">
+                                                                            <li><a href="/index#drones-main-index">Drones</a></li>
+                                                                            <li><a href="/accesorios">Accesorios</a></li>
+                                                                            <li><a href="/postventa">Servicio Post-Venta</a></li>
+                                                                            <li><a href="/reseller">Quiero ser Distribuidor</a></li>
+                                                                    </ul>
+
+                                                    </div><!-- /.link-wrapper -->
+                    </div><!-- /.footer-widget -->
+                </div><!-- /.col-lg-3 -->
+
+                <div class="col-xs-12 col-md-6 col-lg-3 custom-footer-content custom-footer-conten-center">
+                    <div class="footer-widget links-widget custom-footer-content-navigation">
+
+                        <div class="widget-title">
+                            <h3 class="invisible" class="">Navegación</h3>
+                        </div><!-- /.widget-title -->
+                        <div class="link-wrapper clearfix">
+
+                                                            <ul class="link-lists">
+                                                                            <li><a href="/capacitaciones">Capacitaciones</a></li>
+                                                                            <li><a href="/eventos">Eventos</a></li>
+                                                                            <li><a href="/descargas">Descargas</a></li>
+                                                                            <li><a href="/contacto">Contacto</a></li>
+                                                                    </ul>
+
+                                                    </div><!-- /.link-wrapper -->
+                    </div><!-- /.footer-widget -->
+                </div><!-- /.col-lg-3 -->
+
+                <div class="col-xs-12 col-md-6 col-lg-3 custom-footer-content custom-footer-conten-center">
+                    
+    </div><!-- /.main-footer -->
+    <div class="bottom-footer">
+        <div class="container ">
+            <div class="container-inner clearfix">
+                <div class="left-content float-left">
+                    <p id="copyright">© Copyright 2025. All Right Reserved.</p>
+                </div><!-- /.left-content float-left -->
+                <div class="right-content float-right">
+                    <!--
+                    <div class="social custom-dji-social">
+                                                    <a href="https://www.facebook.com/akron.san.francisco/" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a>
+                                                    <a href="https://www.instagram.com/akron_maquinaria/" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a>
+                                                    <a href="https://twitter.com/AKRONMaquinaria" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a>
+                                                    <a href="https://www.youtube.com/user/AkronSanFrancisco" target="_blank" rel="noopener"><i class="fa fa-youtube"></i></a>
+                                                    <a href="https://ar.linkedin.com/company/akron-maquinaria-agr-cola" target="_blank" rel="noopener"><i class="fa fa-linkedin"></i></a>
+                                            </div>/.social -->
+                </div><!-- /.left-content float-left -->
+            </div><!-- /.container-inner -->
+        </div><!-- /.container -->
+    </div><!-- /.bottom-footer -->
+</footer>		<div class="footer_jsolutions">
+
+
+<div>Powered by </div><a href="https://www.jsolutionsweb.io">&nbsp;JSolutions</a><div>&nbsp;|  Todos los derechos reservados</div>
+
+
+</div>
+
+			
+		</div>
+		
+	</div>
+	
+</body>
+</html>
+<script type="text/javascript">
+$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+
+$(document).ready(function () {
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+
+  // if (document.body.scrollTop > 160 || document.documentElement.scrollTop > 160) {
+  //   document.getElementById("navbar").style.padding = "0px 75px";
+  //   document.getElementById("logo").style.fontSize = "7px";
+
+  // } else {
+  //   document.getElementById("navbar").style.padding = "0px 75px";
+  //   document.getElementById("logo").style.fontSize = "7px";
+  // }
+
+}
+
+});
+
+
+const $dropdown = $(".dropdown");
+const $dropdownToggle = $(".dropdown-toggle");
+const $dropdownMenu = $(".dropdown-menu");
+const showClass = "show";
+$(window).on("load resize", function() {
+  if (this.matchMedia("(min-width: 768px)").matches) {
+    $dropdown.hover(
+      function() {
+        const $this = $(this);
+        $this.addClass(showClass);
+        $this.find($dropdownToggle).attr("aria-expanded", "true");
+        $this.find($dropdownMenu).addClass(showClass);
+      },
+      function() {
+        const $this = $(this);
+        $this.removeClass(showClass);
+        $this.find($dropdownToggle).attr("aria-expanded", "false");
+        $this.find($dropdownMenu).removeClass(showClass);
+      }
+    );
+  } else {
+    $dropdown.off("mouseenter mouseleave");
+  }
+});
+
+
+</script>
