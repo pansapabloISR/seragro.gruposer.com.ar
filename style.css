@@ -373,7 +373,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 3rem;
+    padding: 0 3rem;
     max-width: 1400px;
     margin: 0 auto;
     min-height: auto;
@@ -524,7 +524,7 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding-top: calc(113px + 1rem);
+    padding-top: 113px;
 }
 
 .hero-video {
@@ -1719,7 +1719,7 @@ video {
     }
     
     .hero {
-        padding-top: calc(211px + 1rem);
+        padding-top: 211px;
     }
 }
 
@@ -1731,7 +1731,7 @@ video {
     }
     
     .hero {
-        padding-top: calc(141px + 1rem);
+        padding-top: 141px;
     }
 
     .nav-menu a {
@@ -1751,7 +1751,7 @@ video {
     }
     
     .hero {
-        padding-top: calc(113px + 1rem);
+        padding-top: 113px;
     }
 
     .nav-menu a {
@@ -1767,6 +1767,6 @@ video {
     }
     
     .hero {
-        padding-top: calc(99px + 1rem);
+        padding-top: 99px;
     }
 }
