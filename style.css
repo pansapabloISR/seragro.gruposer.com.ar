@@ -377,7 +377,6 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     min-height: auto;
-    height: 60px;
 }
 
 .logo img {
@@ -525,7 +524,7 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-top: 60px;
+    margin-top: 6px;
 }
 
 .hero-video {
@@ -1701,8 +1700,8 @@ video {
 
 /* Estilos base para logos - MÓVIL */
 .logo img {
-    height: 60px !important;
-    width: 60px !important;
+    height: 120px !important;
+    width: 120px !important;
     max-width: none !important;
     object-fit: contain !important;
     display: block !important;
@@ -1715,16 +1714,16 @@ video {
 /* Estilos específicos para PC (desktop) */
 @media (min-width: 769px) {
     .logo img {
-        height: 112px !important;
-        width: 112px !important;
+        height: 225px !important;
+        width: 225px !important;
     }
 }
 
 /* Media queries para tablets */
 @media (max-width: 1024px) {
     .logo img {
-        height: 75px !important;
-        width: 75px !important;
+        height: 150px !important;
+        width: 150px !important;
     }
 
     .nav-menu a {
@@ -1739,8 +1738,8 @@ video {
 /* Media queries para móviles pequeños */
 @media (max-width: 768px) {
     .logo img {
-        height: 60px !important;
-        width: 60px !important;
+        height: 120px !important;
+        width: 120px !important;
     }
 
     .nav-menu a {
@@ -1751,7 +1750,7 @@ video {
 /* Media queries para móviles muy pequeños */
 @media (max-width: 480px) {
     .logo img {
-        height: 52px !important;
-        width: 52px !important;
+        height: 105px !important;
+        width: 105px !important;
     }
 }
