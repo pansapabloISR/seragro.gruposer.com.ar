@@ -1701,8 +1701,8 @@ video {
 
 /* Estilos base para logos - MÓVIL */
 .logo img {
-    height: 90px !important;
-    width: 90px !important;
+    height: 113px !important;
+    width: 113px !important;
     max-width: none !important;
     object-fit: contain !important;
     display: block !important;
@@ -1715,16 +1715,16 @@ video {
 /* Estilos específicos para PC (desktop) */
 @media (min-width: 769px) {
     .logo img {
-        height: 169px !important;
-        width: 169px !important;
+        height: 211px !important;
+        width: 211px !important;
     }
 }
 
 /* Media queries para tablets */
 @media (max-width: 1024px) {
     .logo img {
-        height: 113px !important;
-        width: 113px !important;
+        height: 141px !important;
+        width: 141px !important;
     }
 
     .nav-menu a {
@@ -1739,8 +1739,8 @@ video {
 /* Media queries para móviles pequeños */
 @media (max-width: 768px) {
     .logo img {
-        height: 90px !important;
-        width: 90px !important;
+        height: 113px !important;
+        width: 113px !important;
     }
 
     .nav-menu a {
@@ -1751,7 +1751,7 @@ video {
 /* Media queries para móviles muy pequeños */
 @media (max-width: 480px) {
     .logo img {
-        height: 79px !important;
-        width: 79px !important;
+        height: 99px !important;
+        width: 99px !important;
     }
 }
