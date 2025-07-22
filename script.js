@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Botón de WhatsApp flotante que va directamente a WhatsApp
     const whatsappButton = document.createElement('a');
-    whatsappButton.href = "https://api.whatsapp.com/send?phone=5493465598961&text=Hola, vengo desde el sitio de SER AGRO";
+    whatsappButton.href = "https://api.whatsapp.com/send?phone=5493465432715&text=Hola, vengo desde el sitio de SER AGRO";
     whatsappButton.target = "_blank";
     whatsappButton.style.cssText = `
         position: fixed;
