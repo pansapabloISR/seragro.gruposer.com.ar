@@ -198,10 +198,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const mavildasButton = document.createElement('div');
     mavildasButton.style.cssText = `
         position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 70px;
-        height: 70px;
+        bottom: 90px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -210,20 +210,39 @@ document.addEventListener('DOMContentLoaded', function() {
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         z-index: 1000;
         transition: all 0.3s ease;
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        background: linear-gradient(135deg, #667eea, #764ba2);
         border: 3px solid #fff;
         overflow: hidden;
     `;
 
-    mavildasButton.innerHTML = `
-        <img src="imagenes/mavilda-avatar.png" alt="Mavilda Bot" style="
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            border-radius: 50%;
-        ">
+    // Crear imagen del avatar
+    const avatarImg = document.createElement('img');
+    avatarImg.src = 'imagenes/mavilda-avatar.png';
+    avatarImg.alt = 'Mavilda Bot';
+    avatarImg.style.cssText = `
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
     `;
+    
+    // Si la imagen no carga, mostrar texto alternativo
+    avatarImg.onerror = function() {
+        mavildasButton.innerHTML = `
+            <div style="
+                color: white;
+                font-weight: bold;
+                font-size: 12px;
+                text-align: center;
+                line-height: 1.2;
+            ">
+                Mavilda<br>Bot
+            </div>
+        `;
+    };
+    
+    mavildasButton.appendChild(avatarImg);
 
     // Event listeners para el bot Mavilda
     mavildasButton.addEventListener('mouseenter', () => {
@@ -244,8 +263,8 @@ document.addEventListener('DOMContentLoaded', function() {
     mavildasIframe.src = "https://bot-mavilda-pansapablo.replit.app";
     mavildasIframe.style.cssText = `
         position: fixed;
-        bottom: 90px; /* Ajusta la posición para que no se solape con el botón */
-        left: 20px;
+        bottom: 160px;
+        right: 20px;
         width: 350px;
         height: 500px;
         border-radius: 15px;
