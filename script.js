@@ -194,6 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.body.appendChild(whatsappButton);
 
+    // Agregar el botón de Mavilda al DOM después de crearlo
+    document.body.appendChild(mavildasButton);
+
     // Botón para el bot Mavilda
     const mavildasButton = document.createElement('div');
     mavildasButton.style.cssText = `
@@ -238,10 +241,10 @@ document.addEventListener('DOMContentLoaded', function() {
         mavildasButton.style.filter = 'brightness(1)';
     });
 
-    // Funcionalidad del chat de Mavilda (asumiendo que hay un iframe o div para el chat)
+    // Funcionalidad del chat de Mavilda
     let mavildasOpen = false;
     const mavildasIframe = document.createElement('iframe');
-    mavildasIframe.src = "https://mavilda.com/chat"; // Reemplaza con la URL correcta de tu bot
+    mavildasIframe.src = "https://bot-mavilda-pansapablo.replit.app";
     mavildasIframe.style.cssText = `
         position: fixed;
         bottom: 90px; /* Ajusta la posición para que no se solape con el botón */
