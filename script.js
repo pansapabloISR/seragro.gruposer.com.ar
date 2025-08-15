@@ -194,9 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.body.appendChild(whatsappButton);
 
-    // Agregar el botón de Mavilda al DOM después de crearlo
-    document.body.appendChild(mavildasButton);
-
     // Botón para el bot Mavilda
     const mavildasButton = document.createElement('div');
     mavildasButton.style.cssText = `
@@ -260,6 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
         border: none;
     `;
     document.body.appendChild(mavildasIframe);
+
+    // Agregar el botón de Mavilda al DOM después de crearlo
+    document.body.appendChild(mavildasButton);
 
     mavildasButton.addEventListener('click', () => {
         mavildasOpen = !mavildasOpen;
