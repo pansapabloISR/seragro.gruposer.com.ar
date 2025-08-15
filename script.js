@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Crear imagen del avatar
     const avatarImg = document.createElement('img');
-    avatarImg.src = 'imagenes/mavilda-avatar.png';
+    avatarImg.src = 'imagenes/mavilda-bot.png';
     avatarImg.alt = 'Mavilda Bot';
     avatarImg.style.cssText = `
         width: 100%;
@@ -243,6 +243,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     mavildasButton.appendChild(avatarImg);
+
+    // Agregar el botón de Mavilda al DOM después de crearlo
+    document.body.appendChild(mavildasButton);
 
     // Event listeners para el bot Mavilda
     mavildasButton.addEventListener('mouseenter', () => {
@@ -276,9 +279,6 @@ document.addEventListener('DOMContentLoaded', function() {
         border: none;
     `;
     document.body.appendChild(mavildasIframe);
-
-    // Agregar el botón de Mavilda al DOM después de crearlo
-    document.body.appendChild(mavildasButton);
 
     mavildasButton.addEventListener('click', () => {
         mavildasOpen = !mavildasOpen;
