@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Crear imagen del avatar
     const avatarImg = document.createElement('img');
-    avatarImg.src = 'imagenes/mavilda-bot.png';
+    avatarImg.src = 'attached_assets/mavilda-bot.png';
     avatarImg.alt = 'Mavilda Bot';
     avatarImg.style.cssText = `
         width: 100%;
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
         object-position: center;
         border-radius: 50%;
     `;
-    
+
     // Si la imagen no carga, mostrar texto alternativo
     avatarImg.onerror = function() {
         console.log('Error cargando imagen mavilda-bot.png, usando texto alternativo');
@@ -249,18 +249,18 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
     };
-    
+
     // Agregar log cuando la imagen se carga correctamente
     avatarImg.onload = function() {
         console.log('Imagen mavilda-bot.png cargada correctamente');
     };
-    
+
     // Agregar la imagen al botón
     mavildasButton.appendChild(avatarImg);
 
     // Agregar el botón de Mavilda al DOM después de crearlo
     document.body.appendChild(mavildasButton);
-    
+
     console.log('Botón Mavilda creado y agregado al DOM con imagen:', avatarImg.src);
 
     // Event listeners para el bot Mavilda
