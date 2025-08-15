@@ -194,6 +194,97 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.body.appendChild(whatsappButton);
 
+    // Botón para el bot Mavilda
+    const mavildasButton = document.createElement('div');
+    mavildasButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 3px solid #fff;
+        overflow: hidden;
+    `;
+
+    mavildasButton.innerHTML = `
+        <img src="imagenes/mavilda-avatar.png" alt="Mavilda Bot" style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+        ">
+    `;
+
+    // Event listeners para el bot Mavilda
+    mavildasButton.addEventListener('mouseenter', () => {
+        mavildasButton.style.transform = 'scale(1.15)';
+        mavildasButton.style.boxShadow = '0 8px 25px rgba(0,0,0,0.4)';
+        mavildasButton.style.filter = 'brightness(1.1)';
+    });
+
+    mavildasButton.addEventListener('mouseleave', () => {
+        mavildasButton.style.transform = 'scale(1)';
+        mavildasButton.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+        mavildasButton.style.filter = 'brightness(1)';
+    });
+
+    // Funcionalidad del chat de Mavilda (asumiendo que hay un iframe o div para el chat)
+    let mavildasOpen = false;
+    const mavildasIframe = document.createElement('iframe');
+    mavildasIframe.src = "https://mavilda.com/chat"; // Reemplaza con la URL correcta de tu bot
+    mavildasIframe.style.cssText = `
+        position: fixed;
+        bottom: 90px; /* Ajusta la posición para que no se solape con el botón */
+        left: 20px;
+        width: 350px;
+        height: 500px;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        z-index: 999;
+        transition: all 0.3s ease-out;
+        opacity: 0;
+        transform: scale(0);
+        border: none;
+    `;
+    document.body.appendChild(mavildasIframe);
+
+    mavildasButton.addEventListener('click', () => {
+        mavildasOpen = !mavildasOpen;
+        if (mavildasOpen) {
+            mavildasIframe.style.transform = 'scale(1)';
+            mavildasIframe.style.opacity = '1';
+            mavildasButton.style.border = '3px solid #4CAF50';
+            mavildasButton.style.boxShadow = '0 4px 15px rgba(76, 175, 80, 0.5)';
+        } else {
+            mavildasIframe.style.transform = 'scale(0)';
+            mavildasIframe.style.opacity = '0';
+            mavildasButton.style.border = '3px solid #fff';
+            mavildasButton.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+        }
+    });
+
+    // Cerrar el chat de Mavilda si se hace clic fuera de él o en el botón de nuevo
+    document.addEventListener('click', function(e) {
+        if (mavildasOpen && !mavildasButton.contains(e.target) && !mavildasIframe.contains(e.target)) {
+            mavildasOpen = false;
+            mavildasIframe.style.transform = 'scale(0)';
+            mavildasIframe.style.opacity = '0';
+            mavildasButton.style.border = '3px solid #fff';
+            mavildasButton.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+        }
+    });
+
+
     // Funcionalidad del formulario de contacto
     const contactForms = document.querySelectorAll('.contact-form');
     contactForms.forEach(form => {
