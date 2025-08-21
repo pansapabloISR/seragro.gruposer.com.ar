@@ -1586,7 +1586,7 @@ video {
     filter: grayscale(0%);
 }
 
-/* Lists with bullets completely attached to text */
+/* Lists with bullets truly attached to text */
 ul {
     padding-left: 0;
     margin-left: 0;
@@ -1597,14 +1597,16 @@ ul li {
     margin: 0;
     padding: 0;
     position: relative;
-    padding-left: 1em;
+    padding-left: 0.7em;
+    text-indent: 0;
 }
 
 ul li::before {
-    content: "•";
+    content: "• ";
     position: absolute;
     left: 0;
     color: inherit;
+    font-weight: bold;
 }
 
 .adapt-item ul {
@@ -1617,14 +1619,16 @@ ul li::before {
     margin: 0;
     padding: 0;
     position: relative;
-    padding-left: 1em;
+    padding-left: 0.7em;
+    text-indent: 0;
 }
 
 .adapt-item li::before {
-    content: "•";
+    content: "• ";
     position: absolute;
     left: 0;
     color: inherit;
+    font-weight: bold;
 }
 
 /* Specific adjustments for system content lists */
@@ -1644,17 +1648,19 @@ ul li::before {
     margin: 0;
     padding: 0;
     position: relative;
-    padding-left: 1em;
+    padding-left: 0.7em;
+    text-indent: 0;
 }
 
 .system-text ul li::before,
 .pump-text ul li::before,
 .signal-text ul li::before,
 .orchard-text ul li::before {
-    content: "•";
+    content: "• ";
     position: absolute;
     left: 0;
     color: inherit;
+    font-weight: bold;
 }
 
 /* Formulario de contacto */
