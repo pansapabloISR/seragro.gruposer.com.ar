@@ -1576,6 +1576,27 @@ video {
     filter: grayscale(0%);
 }
 
+/* Lists with closer bullet spacing */
+ul {
+    padding-left: 1rem;
+}
+
+ul li {
+    margin-right: 0.5rem;
+}
+
+ul li::before {
+    margin-right: 0.3rem;
+}
+
+.adapt-item ul {
+    padding-left: 1rem;
+}
+
+.adapt-item li {
+    margin-right: 0.5rem;
+}
+
 /* Formulario de contacto */
 .contact-form-container {
     background: rgba(255,255,255,0.1);
