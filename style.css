@@ -499,8 +499,8 @@ body {
     transition: all 0.3s ease;
 }
 
-.nav-toggle:hover {
-    background: rgba(255,255,255,0.1);
+.nav-toggle:hover span {
+    background: #ffffff;
 }
 
 .nav-toggle span {
@@ -512,8 +512,8 @@ body {
     border-radius: 1px;
 }
 
-.nav-toggle:hover span {
-    background: #ffffff;
+.nav-toggle:hover {
+    background: rgba(255,255,255,0.1);
 }
 
 /* Hero Section */
@@ -662,13 +662,23 @@ section {
 }
 
 .adapt-item ul {
-    list-style: none;
     padding-left: 0;
+    margin-left: 0;
+    list-style: none;
 }
 
 .adapt-item li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-color);
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-left: 1em;
+}
+
+.adapt-item li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: inherit;
 }
 
 /* Operations */
@@ -1578,25 +1588,43 @@ video {
 
 /* Lists with bullets completely attached to text */
 ul {
-    padding-left: 0.8rem;
+    padding-left: 0;
+    margin-left: 0;
+    list-style: none;
 }
 
 ul li {
-    margin-right: 0;
-    padding-left: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-left: 1em;
 }
 
 ul li::before {
-    margin-right: 0;
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: inherit;
 }
 
 .adapt-item ul {
-    padding-left: 0.8rem;
+    padding-left: 0;
+    margin-left: 0;
+    list-style: none;
 }
 
 .adapt-item li {
-    margin-right: 0;
-    padding-left: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-left: 1em;
+}
+
+.adapt-item li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: inherit;
 }
 
 /* Specific adjustments for system content lists */
@@ -1604,28 +1632,29 @@ ul li::before {
 .pump-text ul,
 .signal-text ul,
 .orchard-text ul {
-    padding-left: 0.5rem;
+    padding-left: 0;
     margin-left: 0;
+    list-style: none;
 }
 
 .system-text ul li,
 .pump-text ul li,
 .signal-text ul li,
 .orchard-text ul li {
-    margin-right: 0;
-    padding-left: 0;
-    text-indent: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-left: 1em;
 }
 
-/* Force bullets to be directly attached */
-ul li::marker {
-    content: "• ";
-}
-
-ul li {
-    list-style-position: outside;
-    margin-left: 0;
-    text-indent: 0;
+.system-text ul li::before,
+.pump-text ul li::before,
+.signal-text ul li::before,
+.orchard-text ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: inherit;
 }
 
 /* Formulario de contacto */
