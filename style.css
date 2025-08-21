@@ -1586,58 +1586,49 @@ video {
     filter: grayscale(0%);
 }
 
-/* Lists with bullets truly attached to text */
+/* Bullets completely attached to text - no spacing */
 ul {
-    padding-left: 0;
-    margin-left: 0;
+    padding: 0;
+    margin: 0;
     list-style: none;
 }
 
 ul li {
     margin: 0;
     padding: 0;
-    position: relative;
-    padding-left: 0.7em;
-    text-indent: 0;
-}
-
-ul li::before {
-    content: "• ";
-    position: absolute;
-    left: 0;
-    color: inherit;
-    font-weight: bold;
+    display: block;
 }
 
 .adapt-item ul {
-    padding-left: 0;
-    margin-left: 0;
+    padding: 0;
+    margin: 0;
     list-style: none;
 }
 
 .adapt-item li {
     margin: 0;
     padding: 0;
-    position: relative;
-    padding-left: 0.7em;
-    text-indent: 0;
+    display: block;
 }
 
-.adapt-item li::before {
-    content: "• ";
-    position: absolute;
-    left: 0;
-    color: inherit;
-    font-weight: bold;
+/* Remove all pseudo-elements and spacing */
+ul li::before,
+.adapt-item li::before,
+.system-text ul li::before,
+.pump-text ul li::before,
+.signal-text ul li::before,
+.orchard-text ul li::before {
+    content: none;
+    display: none;
 }
 
-/* Specific adjustments for system content lists */
+/* System content lists */
 .system-text ul,
 .pump-text ul,
 .signal-text ul,
 .orchard-text ul {
-    padding-left: 0;
-    margin-left: 0;
+    padding: 0;
+    margin: 0;
     list-style: none;
 }
 
@@ -1647,20 +1638,7 @@ ul li::before {
 .orchard-text ul li {
     margin: 0;
     padding: 0;
-    position: relative;
-    padding-left: 0.7em;
-    text-indent: 0;
-}
-
-.system-text ul li::before,
-.pump-text ul li::before,
-.signal-text ul li::before,
-.orchard-text ul li::before {
-    content: "• ";
-    position: absolute;
-    left: 0;
-    color: inherit;
-    font-weight: bold;
+    display: block;
 }
 
 /* Formulario de contacto */
