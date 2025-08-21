@@ -1597,7 +1597,7 @@ ul li {
     margin: 0;
     padding: 0;
     position: relative;
-    padding-left: 1em;
+    padding-left: 0;
 }
 
 ul li::before {
@@ -1605,6 +1605,7 @@ ul li::before {
     position: absolute;
     left: 0;
     color: inherit;
+    margin-right: 0;
 }
 
 .adapt-item ul {
@@ -1617,7 +1618,7 @@ ul li::before {
     margin: 0;
     padding: 0;
     position: relative;
-    padding-left: 1em;
+    padding-left: 0;
 }
 
 .adapt-item li::before {
@@ -1625,6 +1626,7 @@ ul li::before {
     position: absolute;
     left: 0;
     color: inherit;
+    margin-right: 0;
 }
 
 /* Specific adjustments for system content lists */
@@ -1644,7 +1646,7 @@ ul li::before {
     margin: 0;
     padding: 0;
     position: relative;
-    padding-left: 1em;
+    padding-left: 0;
 }
 
 .system-text ul li::before,
@@ -1655,6 +1657,7 @@ ul li::before {
     position: absolute;
     left: 0;
     color: inherit;
+    margin-right: 0;
 }
 
 /* Formulario de contacto */
