@@ -1576,18 +1576,18 @@ video {
     filter: grayscale(0%);
 }
 
-/* Lists with much closer bullet spacing */
+/* Lists with bullets completely attached to text */
 ul {
     padding-left: 0.8rem;
 }
 
 ul li {
-    margin-right: 0.2rem;
+    margin-right: 0;
     padding-left: 0;
 }
 
 ul li::before {
-    margin-right: 0.1rem;
+    margin-right: 0;
 }
 
 .adapt-item ul {
@@ -1595,7 +1595,7 @@ ul li::before {
 }
 
 .adapt-item li {
-    margin-right: 0.2rem;
+    margin-right: 0;
     padding-left: 0;
 }
 
@@ -1612,8 +1612,19 @@ ul li::before {
 .pump-text ul li,
 .signal-text ul li,
 .orchard-text ul li {
-    margin-right: 0.1rem;
+    margin-right: 0;
     padding-left: 0;
+    text-indent: 0;
+}
+
+/* Force bullets to be directly attached */
+ul li::marker {
+    content: "• ";
+}
+
+ul li {
+    list-style-position: outside;
+    margin-left: 0;
     text-indent: 0;
 }
 
