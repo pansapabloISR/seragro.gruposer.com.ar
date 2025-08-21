@@ -1163,25 +1163,12 @@ section {
         flex-direction: column !important;
         cursor: pointer !important;
         visibility: visible !important;
-```text
         opacity: 1 !important;
         box-sizing: border-box !important;
         margin: 0 !important;
         transform: none !important;
         left: auto !important;
         box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
-    }
-
-    .nav-toggle span {
-        width: 30px !important;
-        height: 4px !important;
-        background: #ffffff !important;
-        margin: 4px 0 !important;
-        transition: all 0.3s ease !important;
-        display: block !important;
-        border-radius: 2px !important;
-        opacity: 1 !important;
-        visibility: visible !important;
     }
 
     .nav-toggle.active span:nth-child(1) {
@@ -1468,11 +1455,6 @@ section {
 
     .logo img {
         height: 38px;
-    }
-
-    .nav-toggle span {
-        width: 20px;
-        height: 2px;
     }
 
     .feature-card, .operation-card, .ext-feature, .charging-item {
