@@ -31,9 +31,7 @@
             <div id="mavilda-chat-container">
                 <!-- Botón flotante -->
                 <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L4 7V12C4 16.5 7.5 20.5 12 22C16.5 20.5 20 16.5 20 12V7L12 2Z" fill="white"/>
-                    </svg>
+                    <img src="imagenes/mavilda ingeniera agronoma.png" alt="Mavilda" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </button>
 
                 <!-- Ventana de chat -->
