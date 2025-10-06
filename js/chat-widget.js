@@ -1,526 +1,544 @@
-// Chat Widget Mavilda - Versión Final Optimizada
 (function() {
     'use strict';
 
-    // Configuración
+    // ==========================================
+    // CONFIGURACIÓN
+    // ==========================================
     const CONFIG = {
         webhookUrl: 'https://primary-production-396f31.up.railway.app/webhook/mavilda-chat',
         position: 'bottom-right',
         primaryColor: '#2E7D32',
         secondaryColor: '#1B5E20',
-        logoUrl: 'imagenes/logo color pleno.png' // Logo de SER AGRO
+        autoGreeting: true  // ← NUEVO: saludo automático
     };
 
-    // Generar ID de sesión único
+    let isOpen = false;
+    let sessionId = null;
+    let hasGreeted = false; // ← NUEVO: controla si ya saludó
+
+    // ==========================================
+    // GENERAR SESSION ID
+    // ==========================================
     function generateSessionId() {
-        const stored = localStorage.getItem('mavilda_session_id');
-        if (stored) return stored;
-
-        const newId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('mavilda_session_id', newId);
-        return newId;
+        return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
 
-    const sessionId = generateSessionId();
+    // ==========================================
+    // CREAR ESTRUCTURA HTML
+    // ==========================================
+    function createChatWidget() {
+        const widgetHTML = `
+            <div id="mavilda-chat-container">
+                <!-- Botón flotante -->
+                <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L4 7V12C4 16.5 7.5 20.5 12 22C16.5 20.5 20 16.5 20 12V7L12 2Z" fill="white"/>
+                    </svg>
+                </button>
 
-    // Estilos CSS del widget
-    const styles = `
-        .mavilda-chat-widget {
-            position: fixed;
-            ${CONFIG.position.includes('right') ? 'right: 20px;' : 'left: 20px;'}
-            bottom: 90px;
-            z-index: 9998;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        .mavilda-chat-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, ${CONFIG.primaryColor}, ${CONFIG.secondaryColor});
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .mavilda-chat-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-        }
-
-        .mavilda-chat-button svg {
-            width: 32px;
-            height: 32px;
-            fill: white;
-        }
-
-        .mavilda-chat-button.active svg.chat-icon {
-            display: none;
-        }
-
-        .mavilda-chat-button svg.close-icon {
-            display: none;
-        }
-
-        .mavilda-chat-button.active svg.close-icon {
-            display: block;
-        }
-
-        .mavilda-chat-window {
-            position: absolute;
-            bottom: 80px;
-            ${CONFIG.position.includes('right') ? 'right: 0;' : 'left: 0;'}
-            width: 380px;
-            height: 550px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            animation: slideUp 0.3s ease-out;
-        }
-
-        .mavilda-chat-window.active {
-            display: flex;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .mavilda-chat-header {
-            background: linear-gradient(135deg, ${CONFIG.primaryColor}, ${CONFIG.secondaryColor});
-            color: white;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .mavilda-chat-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 3px;
-        }
-
-        .mavilda-chat-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .mavilda-chat-info h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .mavilda-chat-info p {
-            margin: 3px 0 0;
-            font-size: 13px;
-            opacity: 0.9;
-        }
-
-        .mavilda-chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-
-        .mavilda-message {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .mavilda-message.user {
-            align-items: flex-end;
-        }
-
-        .mavilda-message-content {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            word-wrap: break-word;
-            animation: messageIn 0.3s ease-out;
-            line-height: 1.5;
-            white-space: pre-wrap;
-        }
-
-        /* Formato mejorado para mensajes de Mavilda */
-        .mavilda-message.bot .mavilda-message-content {
-            background: white;
-            color: #333;
-            border-bottom-left-radius: 4px;
-        }
-
-        .mavilda-message.bot .mavilda-message-content strong {
-            color: ${CONFIG.primaryColor};
-            display: block;
-            margin: 8px 0 4px 0;
-        }
-
-        .mavilda-message.bot .mavilda-message-content ul {
-            margin: 8px 0;
-            padding-left: 20px;
-        }
-
-        .mavilda-message.bot .mavilda-message-content li {
-            margin: 4px 0;
-        }
-
-        /* Formato de precios */
-        .mavilda-message.bot .mavilda-message-content[data-has-price="true"] {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        @keyframes messageIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .mavilda-message.user .mavilda-message-content {
-            background: ${CONFIG.primaryColor};
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .mavilda-typing {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 18px;
-            max-width: 75px;
-            margin-bottom: 15px;
-        }
-
-        .mavilda-typing.active {
-            display: flex;
-        }
-
-        .mavilda-typing-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: ${CONFIG.primaryColor};
-            animation: typingDot 1.4s infinite;
-        }
-
-        .mavilda-typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .mavilda-typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingDot {
-            0%, 60%, 100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .mavilda-chat-input-container {
-            padding: 15px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            gap: 10px;
-        }
-
-        .mavilda-chat-input {
-            flex: 1;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            padding: 12px 18px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .mavilda-chat-input:focus {
-            border-color: ${CONFIG.primaryColor};
-        }
-
-        .mavilda-chat-send {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: ${CONFIG.primaryColor};
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .mavilda-chat-send:hover {
-            background: ${CONFIG.secondaryColor};
-            transform: scale(1.05);
-        }
-
-        .mavilda-chat-send:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .mavilda-chat-send svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        @media (max-width: 480px) {
-            .mavilda-chat-window {
-                width: calc(100vw - 40px);
-                height: calc(100vh - 100px);
-                max-height: 600px;
-            }
-        }
-    `;
-
-    // Crear elemento de estilos
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);
-
-    // Función para formatear mensaje de Mavilda
-    function formatMessage(text) {
-        // Detectar si tiene precios (USD)
-        const hasPrice = text.includes('USD') || text.includes('$');
-
-        // Mejorar formato de listas y bullets
-        let formatted = text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negritas
-            .replace(/\n- /g, '\n• ') // Bullets
-            .replace(/\n\*/g, '\n•'); // Bullets alternativo
-
-        return { formatted, hasPrice };
-    }
-
-    // HTML del widget
-    const widgetHTML = `
-        <div class="mavilda-chat-widget">
-            <button class="mavilda-chat-button" aria-label="Abrir chat">
-                <svg class="chat-icon" viewBox="0 0 24 24">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-                </svg>
-                <svg class="close-icon" viewBox="0 0 24 24">
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                </svg>
-            </button>
-            <div class="mavilda-chat-window">
-                <div class="mavilda-chat-header">
-                    <div class="mavilda-chat-avatar">
-                        <img src="${CONFIG.logoUrl}" alt="SER AGRO" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🚁%3C/text%3E%3C/svg%3E'">
+                <!-- Ventana de chat -->
+                <div id="mavilda-chat-window" style="display: none;">
+                    <div id="mavilda-chat-header">
+                        <div class="header-content">
+                            <img src="imagenes/logo color pleno.png" alt="Seragro" class="chat-logo">
+                            <div class="header-text">
+                                <strong>Mavilda</strong>
+                                <span>Asesora Seragro</span>
+                            </div>
+                        </div>
+                        <button id="mavilda-chat-close" aria-label="Cerrar chat">✕</button>
                     </div>
-                    <div class="mavilda-chat-info">
-                        <h3>Mavilda</h3>
-                        <p>Asesora de drones agrícolas</p>
+
+                    <div id="mavilda-chat-messages"></div>
+
+                    <div id="mavilda-chat-input-container">
+                        <input 
+                            type="text" 
+                            id="mavilda-chat-input" 
+                            placeholder="Escribí tu mensaje..."
+                            autocomplete="off"
+                        />
+                        <button id="mavilda-chat-send" aria-label="Enviar mensaje">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="white">
+                                <path d="M2 10L18 2L12 18L10 12L2 10Z"/>
+                            </svg>
+                        </button>
                     </div>
-                </div>
-                <div class="mavilda-chat-messages" id="mavilda-messages">
-                    <!-- Mavilda responderá automáticamente -->
-                </div>
-                <div class="mavilda-typing" id="mavilda-typing">
-                    <div class="mavilda-typing-dot"></div>
-                    <div class="mavilda-typing-dot"></div>
-                    <div class="mavilda-typing-dot"></div>
-                </div>
-                <div class="mavilda-chat-input-container">
-                    <input 
-                        type="text" 
-                        class="mavilda-chat-input" 
-                        id="mavilda-input"
-                        placeholder="Escribe tu mensaje..."
-                        autocomplete="off"
-                    />
-                    <button class="mavilda-chat-send" id="mavilda-send" aria-label="Enviar mensaje">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                        </svg>
-                    </button>
                 </div>
             </div>
-        </div>
-    `;
+        `;
 
-    // Insertar widget en el DOM
-    document.addEventListener('DOMContentLoaded', function() {
-        const widgetContainer = document.createElement('div');
-        widgetContainer.innerHTML = widgetHTML;
-        document.body.appendChild(widgetContainer);
+        document.body.insertAdjacentHTML('beforeend', widgetHTML);
+    }
 
-        // Referencias a elementos
-        const chatButton = document.querySelector('.mavilda-chat-button');
-        const chatWindow = document.querySelector('.mavilda-chat-window');
-        const messagesContainer = document.getElementById('mavilda-messages');
-        const typingIndicator = document.getElementById('mavilda-typing');
-        const inputField = document.getElementById('mavilda-input');
-        const sendButton = document.getElementById('mavilda-send');
+    // ==========================================
+    // AGREGAR ESTILOS CSS
+    // ==========================================
+    function addStyles() {
+        const styles = `
+            #mavilda-chat-container {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                z-index: 9998;
+            }
 
-        // Toggle chat
-        chatButton.addEventListener('click', function() {
-            chatButton.classList.toggle('active');
-            chatWindow.classList.toggle('active');
-            if (chatWindow.classList.contains('active')) {
-                inputField.focus();
+            #mavilda-chat-button {
+                position: fixed;
+                bottom: 90px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: ${CONFIG.primaryColor};
+                border: none;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                z-index: 9998;
+            }
 
-                // Enviar saludo inicial solo la primera vez
-                const hasGreeted = localStorage.getItem('mavilda_greeted_' + sessionId);
-                if (!hasGreeted && messagesContainer.children.length === 0) {
-                    localStorage.setItem('mavilda_greeted_' + sessionId, 'true');
-                    sendInitialGreeting();
+            #mavilda-chat-button:hover {
+                transform: scale(1.1);
+                box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            }
+
+            #mavilda-chat-window {
+                position: fixed;
+                bottom: 90px;
+                right: 20px;
+                width: 380px;
+                max-width: calc(100vw - 40px);
+                height: 600px;
+                max-height: calc(100vh - 120px);
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+                display: flex;
+                flex-direction: column;
+                z-index: 9998;
+                overflow: hidden;
+            }
+
+            #mavilda-chat-header {
+                background: ${CONFIG.primaryColor};
+                color: white;
+                padding: 16px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .header-content {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .chat-logo {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: white;
+                padding: 4px;
+                object-fit: contain;
+            }
+
+            .header-text {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header-text strong {
+                font-size: 16px;
+            }
+
+            .header-text span {
+                font-size: 12px;
+                opacity: 0.9;
+            }
+
+            #mavilda-chat-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 0;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: background 0.2s;
+            }
+
+            #mavilda-chat-close:hover {
+                background: rgba(255,255,255,0.1);
+            }
+
+            #mavilda-chat-messages {
+                flex: 1;
+                overflow-y: auto;
+                padding: 16px;
+                background: #f5f5f5;
+            }
+
+            .chat-message {
+                margin-bottom: 12px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .chat-message.user {
+                align-items: flex-end;
+            }
+
+            .chat-message.bot {
+                align-items: flex-start;
+            }
+
+            .message-bubble {
+                max-width: 80%;
+                padding: 10px 14px;
+                border-radius: 16px;
+                word-wrap: break-word;
+                line-height: 1.4;
+            }
+
+            .chat-message.user .message-bubble {
+                background: ${CONFIG.primaryColor};
+                color: white;
+                border-bottom-right-radius: 4px;
+            }
+
+            .chat-message.bot .message-bubble {
+                background: white;
+                color: #333;
+                border-bottom-left-radius: 4px;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+
+            .message-bubble strong {
+                font-weight: 600;
+            }
+
+            .message-bubble ul, .message-bubble ol {
+                margin: 8px 0;
+                padding-left: 20px;
+            }
+
+            .message-bubble li {
+                margin: 4px 0;
+            }
+
+            #mavilda-chat-input-container {
+                display: flex;
+                padding: 12px;
+                background: white;
+                border-top: 1px solid #e0e0e0;
+                gap: 8px;
+            }
+
+            #mavilda-chat-input {
+                flex: 1;
+                padding: 10px 14px;
+                border: 1px solid #ddd;
+                border-radius: 20px;
+                font-size: 14px;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+
+            #mavilda-chat-input:focus {
+                border-color: ${CONFIG.primaryColor};
+            }
+
+            #mavilda-chat-send {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: ${CONFIG.primaryColor};
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s;
+            }
+
+            #mavilda-chat-send:hover {
+                background: ${CONFIG.secondaryColor};
+                transform: scale(1.05);
+            }
+
+            #mavilda-chat-send:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            .typing-indicator {
+                display: flex;
+                gap: 4px;
+                padding: 10px 14px;
+            }
+
+            .typing-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #999;
+                animation: typing 1.4s infinite;
+            }
+
+            .typing-dot:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .typing-dot:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+
+            @keyframes typing {
+                0%, 60%, 100% {
+                    transform: translateY(0);
+                }
+                30% {
+                    transform: translateY(-10px);
                 }
             }
-        });
 
-        // Función para agregar mensaje
-        function addMessage(text, isUser = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `mavilda-message ${isUser ? 'user' : 'bot'}`;
+            /* Responsive */
+            @media (max-width: 480px) {
+                #mavilda-chat-window {
+                    width: calc(100vw - 20px);
+                    height: calc(100vh - 120px);
+                    right: 10px;
+                    bottom: 80px;
+                }
 
-            if (!isUser) {
-                const { formatted, hasPrice } = formatMessage(text);
-                messageDiv.innerHTML = `
-                    <div class="mavilda-message-content" ${hasPrice ? 'data-has-price="true"' : ''}>${formatted}</div>
-                `;
+                #mavilda-chat-button {
+                    right: 10px;
+                    bottom: 80px;
+                }
+            }
+        `;
+
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = styles;
+        document.head.appendChild(styleSheet);
+    }
+
+    // ==========================================
+    // MOSTRAR MENSAJE EN EL CHAT
+    // ==========================================
+    function mostrarMensaje(texto, esUsuario = false) {
+        const chatMessages = document.getElementById('mavilda-chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${esUsuario ? 'user' : 'bot'}`;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
+        bubble.innerHTML = formatearMensaje(texto);
+
+        messageDiv.appendChild(bubble);
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // ==========================================
+    // FORMATEAR MENSAJE (negrita, bullets)
+    // ==========================================
+    function formatearMensaje(texto) {
+        // Convertir **texto** a <strong>
+        texto = texto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        // Convertir bullets
+        texto = texto.replace(/^[•\-]\s/gm, '• ');
+
+        // Convertir saltos de línea
+        texto = texto.replace(/\n/g, '<br>');
+
+        return texto;
+    }
+
+    // ==========================================
+    // MOSTRAR INDICADOR DE ESCRITURA
+    // ==========================================
+    function mostrarEscribiendo() {
+        const chatMessages = document.getElementById('mavilda-chat-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-message bot';
+        typingDiv.id = 'typing-indicator';
+
+        const typingBubble = document.createElement('div');
+        typingBubble.className = 'typing-indicator';
+        typingBubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+
+        typingDiv.appendChild(typingBubble);
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function ocultarEscribiendo() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    // ==========================================
+    // ENVIAR MENSAJE A N8N
+    // ==========================================
+    async function enviarMensaje(mensaje) {
+        if (!mensaje.trim()) return;
+
+        const chatInput = document.getElementById('mavilda-chat-input');
+        const sendButton = document.getElementById('mavilda-chat-send');
+
+        // Mostrar mensaje del usuario solo si no es el saludo automático
+        if (mensaje !== 'Hola') {
+            mostrarMensaje(mensaje, true);
+        }
+
+        // Deshabilitar input
+        chatInput.disabled = true;
+        sendButton.disabled = true;
+
+        // Mostrar indicador de escritura
+        mostrarEscribiendo();
+
+        try {
+            const response = await fetch(CONFIG.webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: mensaje,
+                    sessionId: sessionId
+                })
+            });
+
+            const data = await response.json();
+
+            ocultarEscribiendo();
+
+            if (data.output) {
+                mostrarMensaje(data.output);
+            } else if (data.response) {
+                mostrarMensaje(data.response);
             } else {
-                messageDiv.innerHTML = `
-                    <div class="mavilda-message-content">${text}</div>
-                `;
+                mostrarMensaje('Lo siento, hubo un error. ¿Podrías intentar de nuevo?');
             }
 
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // Función para enviar mensaje inicial
-        async function sendInitialGreeting() {
-            typingIndicator.classList.add('active');
-
-            try {
-                const response = await fetch(CONFIG.webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: 'Hola',
-                        sessionId: sessionId
-                    })
-                });
-
-                const data = await response.json();
-                typingIndicator.classList.remove('active');
-
-                if (data.response) {
-                    addMessage(data.response);
-                } else if (data.output) {
-                    addMessage(data.output);
-                }
-            } catch (error) {
-                console.error('Error en saludo inicial:', error);
-                typingIndicator.classList.remove('active');
-                addMessage('¡Hola! 👋 Soy Mavilda de Seragro. ¿En qué puedo ayudarte?');
-            }
-        }
-
-        // Función para enviar mensaje
-        async function sendMessage() {
-            const message = inputField.value.trim();
-            if (!message) return;
-
-            // Agregar mensaje del usuario
-            addMessage(message, true);
-            inputField.value = '';
-            sendButton.disabled = true;
-
-            // Mostrar indicador de escritura
-            typingIndicator.classList.add('active');
-
-            try {
-                const response = await fetch(CONFIG.webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: message,
-                        sessionId: sessionId
-                    })
-                });
-
-                const data = await response.json();
-
-                // Ocultar indicador de escritura
-                typingIndicator.classList.remove('active');
-
-                // Agregar respuesta del bot
-                if (data.response) {
-                    addMessage(data.response);
-                } else if (data.output) {
-                    addMessage(data.output);
-                } else {
-                    addMessage('Disculpá, tuve un problema al procesar tu mensaje. ¿Podés intentar de nuevo?');
-                }
-
-            } catch (error) {
-                console.error('Error al enviar mensaje:', error);
-                typingIndicator.classList.remove('active');
-                addMessage('Lo siento, hubo un error de conexión. Por favor, intentá nuevamente.');
-            }
-
+        } catch (error) {
+            console.error('Error al enviar mensaje:', error);
+            ocultarEscribiendo();
+            mostrarMensaje('Ups, hubo un problema de conexión. Por favor intentá de nuevo.');
+        } finally {
+            chatInput.value = '';
+            chatInput.disabled = false;
             sendButton.disabled = false;
-            inputField.focus();
+            chatInput.focus();
         }
+    }
 
-        // Event listeners
-        sendButton.addEventListener('click', sendMessage);
+    // ==========================================
+    // ENVIAR SALUDO AUTOMÁTICO
+    // ==========================================
+    function enviarSaludoAutomatico() {
+        if (!hasGreeted && CONFIG.autoGreeting) {
+            hasGreeted = true;
+            // Esperar 500ms para que se vea natural
+            setTimeout(() => {
+                enviarMensaje('Hola');
+            }, 500);
+        }
+    }
 
-        inputField.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
+    // ==========================================
+    // TOGGLE CHAT (abrir/cerrar)
+    // ==========================================
+    function toggleChat() {
+        const chatWindow = document.getElementById('mavilda-chat-window');
+        const chatButton = document.getElementById('mavilda-chat-button');
+
+        isOpen = !isOpen;
+
+        if (isOpen) {
+            chatWindow.style.display = 'flex';
+            chatButton.style.display = 'none';
+            document.getElementById('mavilda-chat-input').focus();
+
+            // ⭐ ENVIAR SALUDO AUTOMÁTICO AL ABRIR
+            enviarSaludoAutomatico();
+        } else {
+            chatWindow.style.display = 'none';
+            chatButton.style.display = 'flex';
+        }
+    }
+
+    // ==========================================
+    // INICIALIZAR EVENTOS
+    // ==========================================
+    function inicializarEventos() {
+        const chatButton = document.getElementById('mavilda-chat-button');
+        const closeButton = document.getElementById('mavilda-chat-close');
+        const chatInput = document.getElementById('mavilda-chat-input');
+        const sendButton = document.getElementById('mavilda-chat-send');
+
+        // Abrir/cerrar chat
+        chatButton.addEventListener('click', toggleChat);
+        closeButton.addEventListener('click', toggleChat);
+
+        // Enviar con botón
+        sendButton.addEventListener('click', () => {
+            const mensaje = chatInput.value;
+            if (mensaje.trim()) {
+                enviarMensaje(mensaje);
             }
         });
 
-        // Auto-resize para móviles
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 480 && chatWindow.classList.contains('active')) {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        // Enviar con Enter
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const mensaje = chatInput.value;
+                if (mensaje.trim()) {
+                    enviarMensaje(mensaje);
+                }
             }
         });
-    });
+    }
+
+    // ==========================================
+    // INICIALIZACIÓN
+    // ==========================================
+    function init() {
+        // Generar session ID
+        sessionId = generateSessionId();
+
+        // Crear widget
+        createChatWidget();
+
+        // Agregar estilos
+        addStyles();
+
+        // Inicializar eventos
+        inicializarEventos();
+
+        console.log('✅ Mavilda Chat Widget cargado correctamente');
+        console.log('Session ID:', sessionId);
+    }
+
+    // Ejecutar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
 })();
