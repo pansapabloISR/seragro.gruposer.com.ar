@@ -5,7 +5,7 @@
     // CONFIGURACIÓN
     // ==========================================
     const CONFIG = {
-        webhookUrl: 'https://primary-production-396f31.up.railway.app/webhook/mavilda-chat',
+        webhookUrl: 'https://primary-production-396f31.up.railway.app/webhook-test/mavilda-chat',
         position: 'bottom-right',
         primaryColor: '#2E7D32',
         secondaryColor: '#1B5E20',

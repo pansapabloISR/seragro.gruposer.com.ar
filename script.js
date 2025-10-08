@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Smooth scroll para enlaces internos válidos solamente
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const encodedMessage = encodeURIComponent(whatsappMessage);
 
             // Crear URL de WhatsApp
-            const whatsappURL = `https://api.whatsapp.com/send?phone=5493401514509&text=${encodedMessage}`;
+            const whatsappURL = `https://api.whatsapp.com/send?phone=5493465432688&text=${encodedMessage}`;
 
             // Mostrar mensaje de confirmación
             const submitButton = this.querySelector('button[type="submit"]');
