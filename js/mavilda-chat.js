@@ -328,9 +328,9 @@
                 }
 
                 #mavilda-chat-button {
-                    right: 10px;
-                    bottom: 10px;
-                    min-width: 120px;
+                    right: 20px;
+                    bottom: 15px;
+                    min-width: 160px;
                     height: 50px;
                     padding: 8px 12px;
                 }
