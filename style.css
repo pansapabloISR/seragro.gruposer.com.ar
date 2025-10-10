@@ -1848,4 +1848,10 @@ ul li::before {
     .hero {
         padding-top: 114px;
     }
+    
+    /* WhatsApp button responsive positioning */
+    .whatsapp-float-button {
+        bottom: 108px !important;
+        right: 10px !important;
+    }
 }

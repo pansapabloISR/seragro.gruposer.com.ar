@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const whatsappButton = document.createElement('a');
     whatsappButton.href = "https://api.whatsapp.com/send?phone=5493465432688&text=Hola, vengo desde el sitio de SER AGRO";
     whatsappButton.target = "_blank";
+    whatsappButton.className = "whatsapp-float-button";
     whatsappButton.style.cssText = `
         position: fixed;
         bottom: 118px;
