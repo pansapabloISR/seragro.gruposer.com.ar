@@ -93,9 +93,12 @@ Preferred communication style: Simple, everyday language.
 ### UI/UX Improvements
 - Updated Mavilda chat button design to green oval with "Chatea con la ingeniera Mavilda" text
 - Desktop floating button spacing: WhatsApp at 110px from bottom, Mavilda at 20px (90px separation)
+- Desktop horizontal positioning: Both buttons at 40px from right edge
 - Mobile floating button spacing: WhatsApp at 75px from bottom, Mavilda at 15px (60px separation, 160px width)
+- Mobile horizontal positioning: WhatsApp at 15px from right, Mavilda at 40px from right
 - Updated all WhatsApp contact numbers from 5493401514509 to 5493465432688
 - Changed Mavilda agent image to "mavilda ingeniera agronoma.png"
 - Fixed mobile/desktop cache issues with file renaming and meta tags
-- Cache-busting version updated to v=1760117209
-- Floating buttons moved 20px inward (from right: 20px to right: 40px) for better mobile UX
+- Cache-busting version updated to v=1760117642
+- Floating buttons optimized for mobile: WhatsApp at 15px from edge, Mavilda at 40px from edge
+- Desktop buttons at 40px from right edge for consistent spacing
