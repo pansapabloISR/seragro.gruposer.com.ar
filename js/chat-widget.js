@@ -89,21 +89,21 @@
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                padding: 14px 24px;
-                border-radius: 30px;
-                background: #2E7D32;
+                padding: 12px 20px;
+                border-radius: 25px;
+                background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
                 border: none;
                 cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 12px;
+                gap: 10px;
                 transition: all 0.3s ease;
                 z-index: 9998;
                 color: white;
-                font-size: 16px;
-                font-weight: 500;
+                font-size: 15px;
+                font-weight: 600;
                 white-space: nowrap;
             }
 
