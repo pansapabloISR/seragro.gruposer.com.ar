@@ -195,6 +195,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.body.appendChild(whatsappButton);
 
+    // Ajustar posición del botón WhatsApp en móviles
+    function adjustWhatsAppButton() {
+        if (window.innerWidth <= 480) {
+            whatsappButton.style.bottom = '75px';
+            whatsappButton.style.right = '20px';
+        } else {
+            whatsappButton.style.bottom = '110px';
+            whatsappButton.style.right = '20px';
+        }
+    }
+
+    adjustWhatsAppButton();
+    window.addEventListener('resize', adjustWhatsAppButton);
+
     // Funcionalidad del formulario de contacto
     const contactForms = document.querySelectorAll('.contact-form');
     contactForms.forEach(form => {
