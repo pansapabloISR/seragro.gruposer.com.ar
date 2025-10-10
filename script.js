@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     whatsappButton.className = "whatsapp-float-button";
     whatsappButton.style.cssText = `
         position: fixed;
-        bottom: 118px;
+        bottom: 130px;
         right: 20px;
         background: #25D366;
         color: white;

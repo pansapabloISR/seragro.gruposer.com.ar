@@ -1851,7 +1851,7 @@ ul li::before {
     
     /* WhatsApp button responsive positioning */
     .whatsapp-float-button {
-        bottom: 108px !important;
+        bottom: 120px !important;
         right: 10px !important;
     }
 }
