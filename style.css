@@ -1745,6 +1745,24 @@ ul li::before {
     .form-row {
         grid-template-columns: 1fr;
     }
+    
+    /* Mejorar botones y formularios para touch */
+    button, .btn, input[type="submit"], .button {
+        min-height: 48px !important;
+        font-size: 16px !important;
+        padding: 12px 24px !important;
+    }
+    
+    input, textarea, select {
+        font-size: 16px !important;
+        padding: 12px !important;
+        min-height: 48px;
+    }
+    
+    /* Espaciado adicional para mejor legibilidad móvil */
+    .section {
+        padding: 40px 20px !important;
+    }
 
     .client-logos {
         gap: 1rem;
