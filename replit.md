@@ -23,13 +23,18 @@ Preferred communication style: Simple, everyday language.
 - **Consistent Layout**: All pages share the same header/navigation structure
 
 ### Interactive Features
-- **Mobile Navigation**: Hamburger menu with toggle functionality (`script.js`)
+- **Mobile Navigation**: Hamburger menu with toggle functionality (`main-app.js`)
 - **Dropdown Menus**: Equipment and downloads sections with hover/click interactions
-- **AI Chat Widget** (`js/chat-widget.js`): Customer support chatbot integration
+- **AI Chat Widget** (`js/mavilda-chat.js`): Customer support chatbot integration
   - Session-based conversations with unique session IDs
   - Webhook integration for backend processing
   - Auto-greeting functionality
-  - Floating button interface
+  - Floating oval button with green brand colors (#2E7D32)
+  - Agent image: "mavilda ingeniera agronoma.png"
+- **WhatsApp Float Button** (`main-app.js`): Direct contact button
+  - Green circular button (#25D366)
+  - Positioned 110px from bottom for optimal spacing with Mavilda button
+  - Updated phone number: +54 (93465) 432688
 
 ### Styling Approach
 - **CSS Variables**: Centralized color scheme and theme configuration
@@ -64,6 +69,22 @@ Preferred communication style: Simple, everyday language.
 - **No Build Process**: Static files served directly without compilation or bundling
 
 ### Contact Information
-- Phone: +54 (9 3401) 514509
+- Phone: +54 (93465) 432688
+- WhatsApp: +54 (93465) 432688
 - Email: ser.agro@gruposer.com.ar
-- Physical Location: Omar Carrascos 2773, Rosario, Argentina
+- Physical Location: Omar Carrasco 2776, Rosario, Argentina
+
+## Recent Changes (October 2025)
+
+### JavaScript Architecture Update
+- Renamed `script.js` → `main-app.js` for better cache management
+- Renamed `js/chat-widget.js` → `js/mavilda-chat.js` for better cache management
+- Implemented aggressive cache-busting strategy with version parameters
+- Custom Python HTTP server (`server.py`) with no-cache headers to prevent browser caching issues
+
+### UI/UX Improvements
+- Updated Mavilda chat button design to green oval with "Chatea con la ingeniera Mavilda" text
+- Adjusted floating button spacing: WhatsApp at 110px from bottom, Mavilda at 20px (90px separation)
+- Updated all WhatsApp contact numbers from 5493401514509 to 5493465432688
+- Changed Mavilda agent image to "mavilda ingeniera agronoma.png"
+- Fixed mobile/desktop cache issues with file renaming and meta tags
