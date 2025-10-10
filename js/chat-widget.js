@@ -324,19 +324,25 @@
                     width: calc(100vw - 20px);
                     height: calc(100vh - 120px);
                     right: 10px;
-                    bottom: 80px;
+                    bottom: 70px;
                 }
 
                 #mavilda-chat-button {
                     right: 10px;
                     bottom: 10px;
-                    min-width: 140px;
-                    height: 56px;
-                    padding: 10px 14px;
+                    min-width: 120px;
+                    height: 50px;
+                    padding: 8px 12px;
+                }
+                
+                #mavilda-chat-button svg {
+                    width: 22px !important;
+                    height: 22px !important;
                 }
                 
                 #mavilda-chat-button span {
-                    font-size: 12px !important;
+                    font-size: 11px !important;
+                    margin-left: 6px !important;
                 }
             }
         `;
