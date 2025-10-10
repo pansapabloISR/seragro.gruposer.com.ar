@@ -8,6 +8,14 @@ SER AGRO is a corporate website for an agricultural drone distributor specializi
 
 Preferred communication style: Simple, everyday language.
 
+### Critical Configuration Rules
+- **⚠️ NEVER recreate workflows using `workflows_set_run_config_tool`** - this overwrites port mappings
+- **Port Configuration**: Internal port 5000 MUST map to external port 5000 (not :80)
+  - User manually configured this in Networking tool
+  - Always use `restart_workflow` to restart the server, never create new workflows
+  - Port mapping is saved in `.replit` file (lines 46-47: `localPort = 5000, externalPort = 5000`)
+- **Workflow Management**: Only use `restart_workflow("Server")` to restart - NEVER use `workflows_set_run_config_tool`
+
 ## System Architecture
 
 ### Frontend Architecture
@@ -84,7 +92,9 @@ Preferred communication style: Simple, everyday language.
 
 ### UI/UX Improvements
 - Updated Mavilda chat button design to green oval with "Chatea con la ingeniera Mavilda" text
-- Adjusted floating button spacing: WhatsApp at 110px from bottom, Mavilda at 20px (90px separation)
+- Desktop floating button spacing: WhatsApp at 110px from bottom, Mavilda at 20px (90px separation)
+- Mobile floating button spacing: WhatsApp at 75px from bottom, Mavilda at 15px (60px separation, 160px width)
 - Updated all WhatsApp contact numbers from 5493401514509 to 5493465432688
 - Changed Mavilda agent image to "mavilda ingeniera agronoma.png"
 - Fixed mobile/desktop cache issues with file renaming and meta tags
+- Cache-busting version updated to v=1760103105
