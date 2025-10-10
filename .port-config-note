@@ -1,3 +1,0 @@
-# IMPORTANTE: NO recrear workflows - usar solo restart_workflow
-# Puerto 5000 -> 5000 configurado manualmente por el usuario
-# NO usar workflows_set_run_config_tool
