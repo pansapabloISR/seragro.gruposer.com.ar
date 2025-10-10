@@ -30,13 +30,14 @@
         const widgetHTML = `
             <div id="mavilda-chat-container">
                 <!-- Botón flotante -->
-                <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda" title="Chat con Ingeniera Mavilda">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="white">
+                <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white" style="flex-shrink: 0;">
                         <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"/>
                         <circle cx="8" cy="10" r="1.5" fill="white"/>
                         <circle cx="12" cy="10" r="1.5" fill="white"/>
                         <circle cx="16" cy="10" r="1.5" fill="white"/>
                     </svg>
+                    <span style="margin-left: 10px; font-size: 12px; font-weight: 600; white-space: nowrap;">Chatea con la<br>ingeniera Mavilda</span>
                 </button>
 
                 <!-- Ventana de chat -->
@@ -88,53 +89,32 @@
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                width: 64px;
-                height: 64px;
-                border-radius: 50%;
-                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, ${CONFIG.secondaryColor} 100%);
-                border: 3px solid white;
+                width: auto;
+                min-width: 200px;
+                height: 56px;
+                padding: 0 20px;
+                border-radius: 28px;
+                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, #388E3C 100%);
+                border: none;
                 cursor: pointer;
-                box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+                box-shadow: 0 4px 16px rgba(46, 125, 50, 0.35);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                transition: all 0.3s ease;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 9998;
                 color: white;
-                overflow: hidden;
-            }
-
-            #mavilda-chat-button svg {
-                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             }
 
             #mavilda-chat-button:hover {
-                transform: scale(1.15) rotate(5deg);
-                box-shadow: 0 8px 30px rgba(46, 125, 50, 0.6);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(46, 125, 50, 0.45);
+                background: linear-gradient(135deg, #388E3C 0%, ${CONFIG.primaryColor} 100%);
             }
             
-            #mavilda-chat-button::before {
-                content: '';
-                position: absolute;
-                top: -2px;
-                left: -2px;
-                right: -2px;
-                bottom: -2px;
-                background: linear-gradient(45deg, #4CAF50, #81C784, #4CAF50);
-                border-radius: 50%;
-                z-index: -1;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            
-            #mavilda-chat-button:hover::before {
-                opacity: 1;
-                animation: rotate 2s linear infinite;
-            }
-            
-            @keyframes rotate {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
+            #mavilda-chat-button:active {
+                transform: translateY(0);
             }
 
             #mavilda-chat-window {
@@ -355,8 +335,13 @@
                 #mavilda-chat-button {
                     right: 10px;
                     bottom: 10px;
-                    width: 56px;
-                    height: 56px;
+                    min-width: 170px;
+                    height: 50px;
+                    padding: 0 16px;
+                }
+                
+                #mavilda-chat-button span {
+                    font-size: 11px !important;
                 }
             }
         `;
