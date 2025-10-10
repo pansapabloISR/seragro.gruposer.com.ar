@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     whatsappButton.style.cssText = `
         position: fixed;
         bottom: 110px;
-        right: 20px;
+        right: 40px;
         background: #25D366;
         color: white;
         width: 60px;
@@ -199,10 +199,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function adjustWhatsAppButton() {
         if (window.innerWidth <= 480) {
             whatsappButton.style.bottom = '75px';
-            whatsappButton.style.right = '20px';
+            whatsappButton.style.right = '40px';
         } else {
             whatsappButton.style.bottom = '110px';
-            whatsappButton.style.right = '20px';
+            whatsappButton.style.right = '40px';
         }
     }
 

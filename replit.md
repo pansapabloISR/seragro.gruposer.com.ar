@@ -97,4 +97,5 @@ Preferred communication style: Simple, everyday language.
 - Updated all WhatsApp contact numbers from 5493401514509 to 5493465432688
 - Changed Mavilda agent image to "mavilda ingeniera agronoma.png"
 - Fixed mobile/desktop cache issues with file renaming and meta tags
-- Cache-busting version updated to v=1760103105
+- Cache-busting version updated to v=1760117209
+- Floating buttons moved 20px inward (from right: 20px to right: 40px) for better mobile UX
