@@ -29,7 +29,11 @@ Preferred communication style: Simple, everyday language.
   - Session-based conversations with unique session IDs
   - Webhook integration for backend processing
   - Auto-greeting functionality
-  - Floating button interface
+  - Rectangular floating button with icon and text "Chatea con la ingeniera Mavilda"
+  - Responsive design maintains button layout across all screen sizes
+- **WhatsApp Contact Button** (`script.js`): Direct WhatsApp link positioned 1cm above Mavilda button
+  - Green circular button with WhatsApp icon
+  - Pre-filled message for customer inquiries
 
 ### Styling Approach
 - **CSS Variables**: Centralized color scheme and theme configuration
