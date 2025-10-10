@@ -99,6 +99,8 @@ Preferred communication style: Simple, everyday language.
 - Updated all WhatsApp contact numbers from 5493401514509 to 5493465432688
 - Changed Mavilda agent image to "mavilda ingeniera agronoma.png"
 - Fixed mobile/desktop cache issues with file renaming and meta tags
-- Cache-busting version updated to v=1760118542
+- Cache-busting version updated to v=1760118542 (JS) and v=1760118914 (CSS)
+- Fixed CSS !important override issue in style.css for mobile button positioning
 - Floating buttons optimized for mobile: WhatsApp at 80px from edge, Mavilda at 40px from edge
 - Desktop buttons at 40px from right edge for consistent spacing
+- Added SO_REUSEADDR to server.py for immediate port reuse after restart
