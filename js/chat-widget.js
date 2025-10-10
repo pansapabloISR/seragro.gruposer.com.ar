@@ -87,7 +87,7 @@
 
             #mavilda-chat-button {
                 position: fixed;
-                bottom: 118px;
+                bottom: 20px;
                 right: 20px;
                 width: auto;
                 min-width: 160px;

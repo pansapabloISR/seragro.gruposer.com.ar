@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
     whatsappButton.target = "_blank";
     whatsappButton.style.cssText = `
         position: fixed;
-        bottom: 20px;
+        bottom: 118px;
         right: 20px;
         background: #25D366;
         color: white;
