@@ -82,7 +82,7 @@
         const styles = `
             #mavilda-chat-container {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-                z-index: 9998;
+                z-index: 100000;
             }
 
             #mavilda-chat-button {
@@ -102,7 +102,7 @@
                 align-items: center;
                 justify-content: center;
                 transition: all 0.3s ease;
-                z-index: 9998;
+                z-index: 100000;
                 color: white;
             }
 
@@ -125,7 +125,7 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.15);
                 display: flex;
                 flex-direction: column;
-                z-index: 9998;
+                z-index: 100000;
                 overflow: hidden;
             }
 
