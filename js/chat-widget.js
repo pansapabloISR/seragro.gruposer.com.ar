@@ -31,7 +31,13 @@
             <div id="mavilda-chat-container">
                 <!-- Botón flotante -->
                 <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda">
-                    <img src="imagenes/mavilda ingeniera agronoma.png" alt="Mavilda" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="flex-shrink: 0;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 13.93 2.60 15.72 3.64 17.19L2.5 21.5L7.08 20.38C8.46 21.24 10.17 21.75 12 21.75C17.52 21.75 22 17.27 22 11.75C22 6.23 17.52 2 12 2ZM12 20C10.43 20 8.95 19.55 7.68 18.76L7.41 18.59L4.65 19.31L5.38 16.65L5.19 16.36C4.33 15.03 3.85 13.47 3.85 11.85C3.85 7.36 7.51 3.7 12 3.7C16.49 3.7 20.15 7.36 20.15 11.85C20.15 16.34 16.49 20 12 20Z"/>
+                        <path d="M8.5 7.5C8.5 7.22 8.72 7 9 7H15C15.28 7 15.5 7.22 15.5 7.5C15.5 7.78 15.28 8 15 8H9C8.72 8 8.5 7.78 8.5 7.5Z"/>
+                        <path d="M8.5 10.5C8.5 10.22 8.72 10 9 10H15C15.28 10 15.5 10.22 15.5 10.5C15.5 10.78 15.28 11 15 11H9C8.72 11 8.5 10.78 8.5 10.5Z"/>
+                        <path d="M8.5 13.5C8.5 13.22 8.72 13 9 13H12C12.28 13 12.5 13.22 12.5 13.5C12.5 13.78 12.28 14 12 14H9C8.72 14 8.5 13.78 8.5 13.5Z"/>
+                    </svg>
+                    <span style="margin-left: 8px; font-size: 13px; font-weight: 600; line-height: 1.2;">Chatea con la<br>ingeniera Mavilda</span>
                 </button>
 
                 <!-- Ventana de chat -->
@@ -81,11 +87,13 @@
 
             #mavilda-chat-button {
                 position: fixed;
-                bottom: 90px;
+                bottom: 118px;
                 right: 20px;
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
+                width: auto;
+                min-width: 160px;
+                height: 64px;
+                padding: 12px 18px;
+                border-radius: 32px;
                 background: ${CONFIG.primaryColor};
                 border: none;
                 cursor: pointer;
@@ -95,11 +103,13 @@
                 justify-content: center;
                 transition: all 0.3s ease;
                 z-index: 9998;
+                color: white;
             }
 
             #mavilda-chat-button:hover {
-                transform: scale(1.1);
-                box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+                background: ${CONFIG.secondaryColor};
             }
 
             #mavilda-chat-window {
@@ -319,7 +329,14 @@
 
                 #mavilda-chat-button {
                     right: 10px;
-                    bottom: 80px;
+                    bottom: 108px;
+                    min-width: 140px;
+                    height: 56px;
+                    padding: 10px 14px;
+                }
+                
+                #mavilda-chat-button span {
+                    font-size: 12px !important;
                 }
             }
         `;
