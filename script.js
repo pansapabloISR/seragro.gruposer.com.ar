@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
     whatsappButton.target = "_blank";
     whatsappButton.style.cssText = `
         position: fixed;
-        bottom: 110px;
+        bottom: 100px;
         right: 20px;
         background: #25D366;
         color: white;
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         justify-content: center;
         text-decoration: none;
         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        z-index: 10000;
+        z-index: 1000;
         transition: transform 0.3s ease;
     `;
 
