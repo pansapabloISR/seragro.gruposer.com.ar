@@ -30,13 +30,14 @@
         const widgetHTML = `
             <div id="mavilda-chat-container">
                 <!-- Botón flotante -->
-                <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda" title="Chat con Ingeniera Mavilda">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="white">
-                        <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"/>
-                        <circle cx="8" cy="10" r="1.5" fill="white"/>
-                        <circle cx="12" cy="10" r="1.5" fill="white"/>
-                        <circle cx="16" cy="10" r="1.5" fill="white"/>
+                <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="flex-shrink: 0;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 13.93 2.60 15.72 3.64 17.19L2.5 21.5L7.08 20.38C8.46 21.24 10.17 21.75 12 21.75C17.52 21.75 22 17.27 22 11.75C22 6.23 17.52 2 12 2ZM12 20C10.43 20 8.95 19.55 7.68 18.76L7.41 18.59L4.65 19.31L5.38 16.65L5.19 16.36C4.33 15.03 3.85 13.47 3.85 11.85C3.85 7.36 7.51 3.7 12 3.7C16.49 3.7 20.15 7.36 20.15 11.85C20.15 16.34 16.49 20 12 20Z"/>
+                        <path d="M8.5 7.5C8.5 7.22 8.72 7 9 7H15C15.28 7 15.5 7.22 15.5 7.5C15.5 7.78 15.28 8 15 8H9C8.72 8 8.5 7.78 8.5 7.5Z"/>
+                        <path d="M8.5 10.5C8.5 10.22 8.72 10 9 10H15C15.28 10 15.5 10.22 15.5 10.5C15.5 10.78 15.28 11 15 11H9C8.72 11 8.5 10.78 8.5 10.5Z"/>
+                        <path d="M8.5 13.5C8.5 13.22 8.72 13 9 13H12C12.28 13 12.5 13.22 12.5 13.5C12.5 13.78 12.28 14 12 14H9C8.72 14 8.5 13.78 8.5 13.5Z"/>
                     </svg>
+                    <span style="margin-left: 8px; font-size: 13px; font-weight: 600; line-height: 1.2;">Chatea con la<br>ingeniera Mavilda</span>
                 </button>
 
                 <!-- Ventana de chat -->
@@ -86,55 +87,29 @@
 
             #mavilda-chat-button {
                 position: fixed;
-                bottom: 20px;
+                bottom: 118px;
                 right: 20px;
-                width: 64px;
+                width: auto;
+                min-width: 160px;
                 height: 64px;
-                border-radius: 50%;
-                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, ${CONFIG.secondaryColor} 100%);
-                border: 3px solid white;
+                padding: 12px 18px;
+                border-radius: 32px;
+                background: ${CONFIG.primaryColor};
+                border: none;
                 cursor: pointer;
-                box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 transition: all 0.3s ease;
                 z-index: 9998;
                 color: white;
-                overflow: hidden;
-            }
-
-            #mavilda-chat-button svg {
-                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             }
 
             #mavilda-chat-button:hover {
-                transform: scale(1.15) rotate(5deg);
-                box-shadow: 0 8px 30px rgba(46, 125, 50, 0.6);
-            }
-            
-            #mavilda-chat-button::before {
-                content: '';
-                position: absolute;
-                top: -2px;
-                left: -2px;
-                right: -2px;
-                bottom: -2px;
-                background: linear-gradient(45deg, #4CAF50, #81C784, #4CAF50);
-                border-radius: 50%;
-                z-index: -1;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
-            
-            #mavilda-chat-button:hover::before {
-                opacity: 1;
-                animation: rotate 2s linear infinite;
-            }
-            
-            @keyframes rotate {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+                background: ${CONFIG.secondaryColor};
             }
 
             #mavilda-chat-window {
@@ -354,9 +329,14 @@
 
                 #mavilda-chat-button {
                     right: 10px;
-                    bottom: 10px;
-                    width: 56px;
+                    bottom: 108px;
+                    min-width: 140px;
                     height: 56px;
+                    padding: 10px 14px;
+                }
+                
+                #mavilda-chat-button span {
+                    font-size: 12px !important;
                 }
             }
         `;
