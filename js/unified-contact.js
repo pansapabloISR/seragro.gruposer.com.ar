@@ -461,31 +461,20 @@
     async function handleCallClick() {
         toggleMenu();
         
-        // Esperar a que Vapi esté disponible
-        if (!vapiReady) {
+        // Inicializar Vapi si no está inicializado
+        if (!vapiInstance) {
             try {
-                await waitForVapi();
+                await initializeVapi();
             } catch (error) {
-                console.error('❌ Vapi SDK no disponible:', error);
+                console.error('❌ Error al inicializar Vapi:', error);
                 alert('El sistema de llamadas no está disponible. Por favor, recargá la página e intentá de nuevo.');
                 return;
             }
         }
 
         try {
-            // Iniciar la llamada con la API oficial de Vapi para HTML
-            await window.vapiSDK.run({
-                apiKey: CONFIG.vapiPublicKey,
-                assistant: CONFIG.vapiAssistantId,
-                config: {
-                    transcriber: {
-                        provider: "deepgram",
-                        model: "nova-2",
-                        language: "es"
-                    }
-                }
-            });
-            
+            // Iniciar la llamada
+            await vapiInstance.start(CONFIG.vapiAssistantId);
             inCall = true;
             
             // Mostrar indicador de llamada y ocultar botón principal
@@ -502,8 +491,8 @@
     }
 
     function endCall() {
-        if (inCall) {
-            // La API de Vapi HTML maneja el stop internamente
+        if (vapiInstance && inCall) {
+            vapiInstance.stop();
             inCall = false;
             
             // Ocultar indicador de llamada
@@ -514,6 +503,32 @@
             
             console.log('✅ Llamada finalizada');
         }
+    }
+
+    // ==========================================
+    // INICIALIZAR VAPI
+    // ==========================================
+    async function initializeVapi() {
+        // Esperar a que Vapi esté disponible
+        if (!vapiReady) {
+            await waitForVapi();
+        }
+
+        // Crear instancia de Vapi sin UI
+        vapiInstance = await window.vapiSDK.run({
+            apiKey: CONFIG.vapiPublicKey,
+            assistant: CONFIG.vapiAssistantId,
+            config: {
+                transcriber: {
+                    provider: "deepgram",
+                    model: "nova-2",
+                    language: "es"
+                }
+            }
+        });
+
+        console.log('✅ Vapi inicializado correctamente');
+        return vapiInstance;
     }
 
     // ==========================================
