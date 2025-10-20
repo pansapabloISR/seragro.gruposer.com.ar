@@ -1,0 +1,110 @@
+🎯 SISTEMA DE COMUNICACIÓN UNIFICADO "HABLÁ CON NOSOTROS"
+1️⃣ BOTÓN PRINCIPAL
+Aspecto visual:
+
+Botón verde oval con texto "Hablá con nosotros"
+Tamaño: 60px de alto, 160px de ancho mínimo
+Ícono de chat con 3 puntos a la izquierda del texto
+Gradiente verde: #2E7D32 → #1B5E20
+Animación de pulso (crece/decrece sutilmente cada 2 segundos)
+Posición:
+
+position: fixed;
+bottom: 100px;    /* 100px desde abajo */
+right: 20px;      /* 20px desde derecha */
+z-index: 100000;  /* Siempre arriba de todo */
+Comportamiento:
+
+Al hacer click: se abre el menú de 3 opciones ARRIBA del botón
+El botón cambia de color a verde oscuro (#1B5E20)
+La animación de pulso se detiene
+2️⃣ MENÚ DE 3 OPCIONES (aparece al hacer click)
+Las opciones aparecen 70px ARRIBA del botón principal, con animación de deslizamiento desde abajo hacia arriba:
+
+Opción 1: WHATSAPP (más arriba)
+
+Botón verde WhatsApp (#25D366)
+Ícono: logo de WhatsApp
+Texto: "WhatsApp"
+Tamaño: 140px ancho × 48px alto
+Opción 2: CHAT (medio)
+
+Botón verde SER AGRO (#2E7D32)
+Ícono: burbujas de chat
+Texto: "Chat"
+Tamaño: 140px ancho × 48px alto
+Opción 3: LLAMAR (más abajo, cerca del botón principal)
+
+Botón blanco con texto oscuro
+Ícono: teléfono
+Texto: "Llamar"
+Tamaño: 140px ancho × 48px alto
+Animación:
+
+Los 3 botones aparecen con un efecto de "slide-in" desde abajo
+Cada botón aparece con un delay de 0.05s entre ellos
+Efecto de fade-in (de transparente a visible)
+3️⃣ ¿A DÓNDE REDIRIGE CADA BOTÓN?
+🟢 WHATSAPP:
+// URL que se abre:
+https://api.whatsapp.com/send?phone=5493465432688&text=Hola,%20vengo%20desde%20el%20sitio%20de%20SER%20AGRO
+// Se abre en nueva pestaña
+window.open(url, '_blank');
+// Después de abrir, el menú se cierra automáticamente
+💬 CHAT (Mavilda):
+// Abre una ventana de chat flotante EN LA MISMA PÁGINA
+// La ventana aparece en la esquina inferior derecha
+// Características:
+- Header con foto de "mavilda ingeniera agronoma.png"
+- Título: "Mavilda - Ingeniera Agrónoma"
+- Campo de texto para escribir mensajes
+- Botón de enviar
+// Backend:
+URL del webhook: https://primary-production-396f31.up.railway.app/webhook/mavilda-chat
+// Funcionalidad:
+- Genera un sessionId único (ej: session_1760877662699_p6owos1rt)
+- Al abrir, envía automáticamente "Hola" al backend
+- El backend responde con un mensaje de saludo
+- Cada mensaje que escribís se envía al webhook con:
+  {
+    "message": "tu mensaje",
+    "sessionId": "session_xxx"
+  }
+📞 LLAMAR (Vapi Voice):
+// SDK de Vapi (desde CDN):
+https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest
+// Credenciales:
+publicKey: '5a29292f-d9cc-4a21-bb7e-ff8df74763cd'
+assistantId: '776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4'
+// Comportamiento:
+1. Al hacer click en "Llamar":
+   - Se cierra el menú de opciones
+   - Se ejecuta: vapiInstance.start(assistantId)
+   - Aparece un indicador de llamada activa
+2. Indicador de llamada:
+   - Texto: "En llamada..."
+   - Animación de pulso rojo
+   - Botón rojo "Colgar" para finalizar
+   - Posicionado a 100px desde abajo (mismo nivel que botón principal)
+3. Al hacer click en "Colgar":
+   - Se ejecuta: vapiInstance.stop()
+   - El indicador desaparece
+   - Vuelve a estado normal
+4️⃣ CÓDIGO DE LIMPIEZA AUTOMÁTICA
+Cuando la página carga, se ejecuta este código PRIMERO:
+
+// Elimina service workers y caché (para evitar problemas de caché):
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+            registration.unregister();
+        }
+    });
+}
+if ('caches' in window) {
+    caches.keys().then(function(names) {
+        for (let name of names) {
+            caches.delete(name);
+        }
+    });
+}
