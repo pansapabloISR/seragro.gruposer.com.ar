@@ -33,16 +33,22 @@ Preferred communication style: Simple, everyday language.
 ### Interactive Features
 - **Mobile Navigation**: Hamburger menu with toggle functionality (`main-app.js`)
 - **Dropdown Menus**: Equipment and downloads sections with hover/click interactions
-- **AI Chat Widget** (`js/mavilda-chat.js`): Customer support chatbot integration
+- **Unified Contact System** (`js/unified-contact.js`): Single-button multi-channel communication hub
+  - **Main Button**: "Hablá con nosotros" - Green oval button with pulse animation
+    - Position: 100px from bottom, 20px from right
+    - Gradient: #2E7D32 → #1B5E20
+    - Opens menu with 3 communication options
+  - **Contact Options Menu**: Appears above main button with slide-in animation
+    - **WhatsApp**: Direct messaging to +54 (93465) 432688
+    - **Chat**: Opens Mavilda AI assistant widget
+    - **Llamar**: Voice calls via Vapi AI (Public Key: 5a29292f-d9cc-4a21-bb7e-ff8df74763cd)
+  - **Call Indicator**: Red pulsing indicator shown during active voice calls
+- **Mavilda Chat Widget** (`js/mavilda-chat.js`): AI-powered customer support
   - Session-based conversations with unique session IDs
   - Webhook integration for backend processing
-  - Auto-greeting functionality
-  - Floating oval button with green brand colors (#2E7D32)
+  - Auto-greeting functionality when opened
   - Agent image: "mavilda ingeniera agronoma.png"
-- **WhatsApp Float Button** (`main-app.js`): Direct contact button
-  - Green circular button (#25D366)
-  - Positioned 110px from bottom for optimal spacing with Mavilda button
-  - Updated phone number: +54 (93465) 432688
+  - Invoked programmatically via window.MavildaChat.open() API
 
 ### Styling Approach
 - **CSS Variables**: Centralized color scheme and theme configuration
@@ -67,6 +73,11 @@ Preferred communication style: Simple, everyday language.
   - URL: `https://primary-production-396f31.up.railway.app/webhook/mavilda-chat`
   - Purpose: AI chat assistant backend for customer support
   - Session-based conversation management
+- **Vapi Voice AI**: Voice call integration for customer support
+  - CDN: `https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest`
+  - Public Key: `5a29292f-d9cc-4a21-bb7e-ff8df74763cd`
+  - Assistant ID: `776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4`
+  - Enables real-time voice conversations with AI assistant
 
 ### External Resources
 - **Google Fonts**: Open Sans font family for typography
@@ -84,23 +95,33 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
+### Unified Communication System (Latest Update)
+- **Created unified-contact.js**: Single-button multi-channel communication hub
+  - Replaced separate WhatsApp and Mavilda floating buttons with one unified button
+  - Implemented 3-option menu: WhatsApp, Chat, and Voice Calls
+  - Added Vapi Voice AI integration for real-time customer support calls
+  - Menu appears with slide-in animation and staggered delays (0.05s between options)
+  - Call indicator with red pulsing animation for active voice calls
+- **Refactored mavilda-chat.js**: Converted to invocable module
+  - Removed standalone floating button
+  - Exposed public API: window.MavildaChat.open() and .close()
+  - Maintains all chat functionality (sessions, auto-greeting, webhook integration)
+- **Updated main-app.js**: Removed standalone WhatsApp button code
+- **Added Vapi SDK**: Loaded from CDN across all pages for voice call functionality
+- **Cache-busting version updated to v=1760957479** (JS and CSS)
+
 ### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
 - Renamed `js/chat-widget.js` → `js/mavilda-chat.js` for better cache management
 - Implemented aggressive cache-busting strategy with version parameters
 - Custom Python HTTP server (`server.py`) with no-cache headers to prevent browser caching issues
+- Added SO_REUSEADDR to server.py for immediate port reuse after restart
 
 ### UI/UX Improvements
-- Updated Mavilda chat button design to green oval with "Chatea con la ingeniera Mavilda" text
-- Desktop floating button spacing: WhatsApp at 110px from bottom, Mavilda at 20px (90px separation)
-- Desktop horizontal positioning: Both buttons at 40px from right edge
-- Mobile floating button spacing: WhatsApp at 75px from bottom, Mavilda at 15px (60px separation, 160px width)
-- Mobile horizontal positioning: WhatsApp at 50px from right, Mavilda at 40px from right
+- Unified contact button: "Hablá con nosotros" at 100px from bottom, 20px from right
+- Pulse animation on main button (grows/shrinks subtly every 2 seconds)
+- Responsive design: Adjusts button size and position for mobile (80px from bottom, 15px from right)
 - Updated all WhatsApp contact numbers from 5493401514509 to 5493465432688
 - Changed Mavilda agent image to "mavilda ingeniera agronoma.png"
 - Fixed mobile/desktop cache issues with file renaming and meta tags
-- Cache-busting version updated to v=1760119657 (JS and CSS)
 - Fixed CSS !important override issue in style.css for mobile button positioning
-- Floating buttons optimized for mobile: WhatsApp at 50px from edge, Mavilda at 40px from edge
-- Desktop buttons at 40px from right edge for consistent spacing
-- Added SO_REUSEADDR to server.py for immediate port reuse after restart

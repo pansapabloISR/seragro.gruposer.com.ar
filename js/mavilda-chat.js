@@ -9,12 +9,12 @@
         position: 'bottom-right',
         primaryColor: '#2E7D32',
         secondaryColor: '#1B5E20',
-        autoGreeting: true  // ← NUEVO: saludo automático
+        autoGreeting: true
     };
 
     let isOpen = false;
     let sessionId = null;
-    let hasGreeted = false; // ← NUEVO: controla si ya saludó
+    let hasGreeted = false;
 
     // ==========================================
     // GENERAR SESSION ID
@@ -24,30 +24,19 @@
     }
 
     // ==========================================
-    // CREAR ESTRUCTURA HTML
+    // CREAR ESTRUCTURA HTML (sin botón)
     // ==========================================
     function createChatWidget() {
         const widgetHTML = `
             <div id="mavilda-chat-container">
-                <!-- Botón flotante -->
-                <button id="mavilda-chat-button" aria-label="Abrir chat con Mavilda">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" style="flex-shrink: 0;">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 13.93 2.60 15.72 3.64 17.19L2.5 21.5L7.08 20.38C8.46 21.24 10.17 21.75 12 21.75C17.52 21.75 22 17.27 22 11.75C22 6.23 17.52 2 12 2ZM12 20C10.43 20 8.95 19.55 7.68 18.76L7.41 18.59L4.65 19.31L5.38 16.65L5.19 16.36C4.33 15.03 3.85 13.47 3.85 11.85C3.85 7.36 7.51 3.7 12 3.7C16.49 3.7 20.15 7.36 20.15 11.85C20.15 16.34 16.49 20 12 20Z"/>
-                        <path d="M8.5 7.5C8.5 7.22 8.72 7 9 7H15C15.28 7 15.5 7.22 15.5 7.5C15.5 7.78 15.28 8 15 8H9C8.72 8 8.5 7.78 8.5 7.5Z"/>
-                        <path d="M8.5 10.5C8.5 10.22 8.72 10 9 10H15C15.28 10 15.5 10.22 15.5 10.5C15.5 10.78 15.28 11 15 11H9C8.72 11 8.5 10.78 8.5 10.5Z"/>
-                        <path d="M8.5 13.5C8.5 13.22 8.72 13 9 13H12C12.28 13 12.5 13.22 12.5 13.5C12.5 13.78 12.28 14 12 14H9C8.72 14 8.5 13.78 8.5 13.5Z"/>
-                    </svg>
-                    <span style="margin-left: 8px; font-size: 13px; font-weight: 600; line-height: 1.2;">Chatea con la<br>ingeniera Mavilda</span>
-                </button>
-
                 <!-- Ventana de chat -->
                 <div id="mavilda-chat-window" style="display: none;">
                     <div id="mavilda-chat-header">
                         <div class="header-content">
-                            <img src="imagenes/mavilda ingeniera agronoma.png" alt="Seragro" class="chat-logo">
+                            <img src="imagenes/mavilda ingeniera agronoma.png" alt="Mavilda" class="chat-logo">
                             <div class="header-text">
                                 <strong>Mavilda</strong>
-                                <span>Asesora Seragro</span>
+                                <span>Ingeniera Agrónoma</span>
                             </div>
                         </div>
                         <button id="mavilda-chat-close" aria-label="Cerrar chat">✕</button>
@@ -83,33 +72,6 @@
             #mavilda-chat-container {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
                 z-index: 100000;
-            }
-
-            #mavilda-chat-button {
-                position: fixed;
-                bottom: 20px;
-                right: 40px;
-                width: auto;
-                min-width: 160px;
-                height: 64px;
-                padding: 12px 18px;
-                border-radius: 32px;
-                background: ${CONFIG.primaryColor};
-                border: none;
-                cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-                z-index: 100000;
-                color: white;
-            }
-
-            #mavilda-chat-button:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-                background: ${CONFIG.secondaryColor};
             }
 
             #mavilda-chat-window {
@@ -326,24 +288,6 @@
                     right: 10px;
                     bottom: 70px;
                 }
-
-                #mavilda-chat-button {
-                    right: 40px;
-                    bottom: 15px;
-                    min-width: 160px;
-                    height: 50px;
-                    padding: 8px 12px;
-                }
-                
-                #mavilda-chat-button svg {
-                    width: 22px !important;
-                    height: 22px !important;
-                }
-                
-                #mavilda-chat-button span {
-                    font-size: 11px !important;
-                    margin-left: 6px !important;
-                }
             }
         `;
 
@@ -373,15 +317,9 @@
     // FORMATEAR MENSAJE (negrita, bullets)
     // ==========================================
     function formatearMensaje(texto) {
-        // Convertir **texto** a <strong>
         texto = texto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-        // Convertir bullets
         texto = texto.replace(/^[•\-]\s/gm, '• ');
-
-        // Convertir saltos de línea
         texto = texto.replace(/\n/g, '<br>');
-
         return texto;
     }
 
@@ -419,16 +357,13 @@
         const chatInput = document.getElementById('mavilda-chat-input');
         const sendButton = document.getElementById('mavilda-chat-send');
 
-        // Mostrar mensaje del usuario solo si no es el saludo automático
         if (mensaje !== 'Hola') {
             mostrarMensaje(mensaje, true);
         }
 
-        // Deshabilitar input
         chatInput.disabled = true;
         sendButton.disabled = true;
 
-        // Mostrar indicador de escritura
         mostrarEscribiendo();
 
         try {
@@ -473,7 +408,6 @@
     function enviarSaludoAutomatico() {
         if (!hasGreeted && CONFIG.autoGreeting) {
             hasGreeted = true;
-            // Esperar 500ms para que se vea natural
             setTimeout(() => {
                 enviarMensaje('Hola');
             }, 500);
@@ -481,24 +415,26 @@
     }
 
     // ==========================================
-    // TOGGLE CHAT (abrir/cerrar)
+    // ABRIR/CERRAR CHAT (API Pública)
     // ==========================================
-    function toggleChat() {
+    function openChat() {
         const chatWindow = document.getElementById('mavilda-chat-window');
-        const chatButton = document.getElementById('mavilda-chat-button');
-
-        isOpen = !isOpen;
-
-        if (isOpen) {
+        
+        if (!isOpen) {
+            isOpen = true;
             chatWindow.style.display = 'flex';
-            chatButton.style.display = 'none';
             document.getElementById('mavilda-chat-input').focus();
-
-            // ⭐ ENVIAR SALUDO AUTOMÁTICO AL ABRIR
+            
             enviarSaludoAutomatico();
-        } else {
+        }
+    }
+
+    function closeChat() {
+        const chatWindow = document.getElementById('mavilda-chat-window');
+        
+        if (isOpen) {
+            isOpen = false;
             chatWindow.style.display = 'none';
-            chatButton.style.display = 'flex';
         }
     }
 
@@ -506,16 +442,12 @@
     // INICIALIZAR EVENTOS
     // ==========================================
     function inicializarEventos() {
-        const chatButton = document.getElementById('mavilda-chat-button');
         const closeButton = document.getElementById('mavilda-chat-close');
         const chatInput = document.getElementById('mavilda-chat-input');
         const sendButton = document.getElementById('mavilda-chat-send');
 
-        // Abrir/cerrar chat
-        chatButton.addEventListener('click', toggleChat);
-        closeButton.addEventListener('click', toggleChat);
+        closeButton.addEventListener('click', closeChat);
 
-        // Enviar con botón
         sendButton.addEventListener('click', () => {
             const mensaje = chatInput.value;
             if (mensaje.trim()) {
@@ -523,7 +455,6 @@
             }
         });
 
-        // Enviar con Enter
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -539,18 +470,11 @@
     // INICIALIZACIÓN
     // ==========================================
     function init() {
-        // Generar session ID
         sessionId = generateSessionId();
-
-        // Crear widget
         createChatWidget();
-
-        // Agregar estilos
         addStyles();
-
-        // Inicializar eventos
         inicializarEventos();
-
+        
         console.log('✅ Mavilda Chat Widget cargado correctamente');
         console.log('Session ID:', sessionId);
     }
@@ -561,5 +485,13 @@
     } else {
         init();
     }
+
+    // ==========================================
+    // API PÚBLICA
+    // ==========================================
+    window.MavildaChat = {
+        open: openChat,
+        close: closeChat
+    };
 
 })();
