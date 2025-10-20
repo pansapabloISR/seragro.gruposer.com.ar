@@ -461,20 +461,32 @@
     async function handleCallClick() {
         toggleMenu();
         
-        // Inicializar Vapi si no está inicializado
-        if (!vapiInstance) {
+        // Esperar a que Vapi esté disponible
+        if (!vapiReady) {
             try {
-                await initializeVapi();
+                await waitForVapi();
             } catch (error) {
-                console.error('❌ Error al inicializar Vapi:', error);
+                console.error('❌ Vapi SDK no disponible:', error);
                 alert('El sistema de llamadas no está disponible. Por favor, recargá la página e intentá de nuevo.');
                 return;
             }
         }
 
         try {
-            // Iniciar la llamada
-            await vapiInstance.start(CONFIG.vapiAssistantId);
+            // Iniciar la llamada directamente con window.vapiSDK.run()
+            console.log('🎯 Iniciando llamada con Vapi...');
+            vapiInstance = await window.vapiSDK.run({
+                apiKey: CONFIG.vapiPublicKey,
+                assistant: CONFIG.vapiAssistantId,
+                config: {
+                    transcriber: {
+                        provider: "deepgram",
+                        model: "nova-2",
+                        language: "es"
+                    }
+                }
+            });
+            
             inCall = true;
             
             // Mostrar indicador de llamada y ocultar botón principal
@@ -483,7 +495,7 @@
             indicator.classList.add('active');
             mainButton.style.display = 'none';
             
-            console.log('✅ Llamada iniciada');
+            console.log('✅ Llamada iniciada correctamente');
         } catch (error) {
             console.error('❌ Error al iniciar llamada:', error);
             alert('No se pudo iniciar la llamada. Por favor, intentá de nuevo.');
@@ -492,7 +504,14 @@
 
     function endCall() {
         if (vapiInstance && inCall) {
-            vapiInstance.stop();
+            try {
+                vapiInstance.stop();
+                console.log('✅ Llamada detenida');
+            } catch (error) {
+                console.error('❌ Error al detener llamada:', error);
+            }
+            
+            vapiInstance = null;
             inCall = false;
             
             // Ocultar indicador de llamada
@@ -503,32 +522,6 @@
             
             console.log('✅ Llamada finalizada');
         }
-    }
-
-    // ==========================================
-    // INICIALIZAR VAPI
-    // ==========================================
-    async function initializeVapi() {
-        // Esperar a que Vapi esté disponible
-        if (!vapiReady) {
-            await waitForVapi();
-        }
-
-        // Crear instancia de Vapi sin UI
-        vapiInstance = await window.vapiSDK.run({
-            apiKey: CONFIG.vapiPublicKey,
-            assistant: CONFIG.vapiAssistantId,
-            config: {
-                transcriber: {
-                    provider: "deepgram",
-                    model: "nova-2",
-                    language: "es"
-                }
-            }
-        });
-
-        console.log('✅ Vapi inicializado correctamente');
-        return vapiInstance;
     }
 
     // ==========================================
