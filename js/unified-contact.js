@@ -29,7 +29,15 @@
             const checkVapi = setInterval(() => {
                 attempts++;
                 
-                if (window.Vapi) {
+                // Debug: ver qué hay disponible en window
+                if (attempts === 1) {
+                    console.log('🔍 Buscando Vapi SDK...');
+                    console.log('window.Vapi:', window.Vapi);
+                    console.log('window.vapiSDK:', window.vapiSDK);
+                }
+                
+                // Chequear si Vapi está disponible (puede ser window.Vapi o el constructor directo)
+                if (window.Vapi || (typeof Vapi !== 'undefined')) {
                     clearInterval(checkVapi);
                     console.log('✅ Vapi SDK cargado y listo');
                     vapiReady = true;
@@ -37,6 +45,7 @@
                 } else if (attempts >= maxAttempts) {
                     clearInterval(checkVapi);
                     console.error('❌ Timeout esperando Vapi SDK');
+                    console.log('Claves disponibles en window:', Object.keys(window).filter(k => k.toLowerCase().includes('vap')));
                     reject(new Error('Vapi SDK no disponible'));
                 }
             }, interval);
