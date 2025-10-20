@@ -17,6 +17,56 @@
     let menuOpen = false;
     let vapiInstance = null;
     let inCall = false;
+    let vapiReady = false;
+
+    // ==========================================
+    // ESPERAR A QUE VAPI SE CARGUE
+    // ==========================================
+    function waitForVapi(maxAttempts = 20, interval = 250) {
+        return new Promise((resolve, reject) => {
+            let attempts = 0;
+            
+            const checkVapi = setInterval(() => {
+                attempts++;
+                
+                if (window.Vapi) {
+                    clearInterval(checkVapi);
+                    console.log('✅ Vapi SDK cargado y listo');
+                    vapiReady = true;
+                    resolve(true);
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkVapi);
+                    console.error('❌ Timeout esperando Vapi SDK');
+                    reject(new Error('Vapi SDK no disponible'));
+                }
+            }, interval);
+        });
+    }
+
+    // ==========================================
+    // MOSTRAR/OCULTAR BOTÓN PRINCIPAL
+    // ==========================================
+    function hideMainButton() {
+        const button = document.getElementById('unified-contact-button');
+        if (button) {
+            button.style.opacity = '0';
+            button.style.pointerEvents = 'none';
+        }
+    }
+
+    function showMainButton() {
+        const button = document.getElementById('unified-contact-button');
+        if (button) {
+            button.style.opacity = '1';
+            button.style.pointerEvents = 'all';
+        }
+    }
+
+    // Exponer API para que otros módulos puedan ocultar/mostrar el botón
+    window.UnifiedContact = {
+        hide: hideMainButton,
+        show: showMainButton
+    };
 
     // ==========================================
     // LIMPIEZA DE CACHÉ (se ejecuta primero)
@@ -380,6 +430,8 @@
 
     function handleChatClick() {
         toggleMenu();
+        // Ocultar botón principal
+        hideMainButton();
         // Invocar el chat de Mavilda
         if (window.MavildaChat && typeof window.MavildaChat.open === 'function') {
             window.MavildaChat.open();
@@ -389,6 +441,17 @@
     async function handleCallClick() {
         toggleMenu();
         
+        // Esperar a que Vapi esté disponible
+        if (!vapiReady) {
+            try {
+                await waitForVapi();
+            } catch (error) {
+                console.error('❌ Vapi SDK no disponible:', error);
+                alert('El sistema de llamadas no está disponible. Por favor, recargá la página e intentá de nuevo.');
+                return;
+            }
+        }
+
         // Inicializar Vapi si no está inicializado
         if (!vapiInstance && window.Vapi) {
             try {
@@ -402,7 +465,7 @@
         }
 
         if (!vapiInstance) {
-            console.error('❌ Vapi SDK no está disponible');
+            console.error('❌ Vapi SDK no está disponible después de inicialización');
             alert('El sistema de llamadas no está disponible en este momento.');
             return;
         }
@@ -412,7 +475,7 @@
             await vapiInstance.start(CONFIG.vapiAssistantId);
             inCall = true;
             
-            // Mostrar indicador de llamada
+            // Mostrar indicador de llamada y ocultar botón principal
             const indicator = document.getElementById('call-indicator');
             const mainButton = document.getElementById('unified-contact-button');
             indicator.classList.add('active');

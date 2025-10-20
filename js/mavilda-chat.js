@@ -435,6 +435,11 @@
         if (isOpen) {
             isOpen = false;
             chatWindow.style.display = 'none';
+            
+            // Mostrar botón principal de nuevo
+            if (window.UnifiedContact && typeof window.UnifiedContact.show === 'function') {
+                window.UnifiedContact.show();
+            }
         }
     }
 
