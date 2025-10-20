@@ -374,6 +374,18 @@
                 background: rgba(255,255,255,0.3);
             }
 
+            /* Ocultar widget de Vapi completamente */
+            .vapi-btn,
+            button[class*="vapi"],
+            div[class*="vapi-widget"],
+            #vapi-button,
+            [data-vapi-button] {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
+
             /* Responsive */
             @media (max-width: 480px) {
                 .unified-contact-main-button {
