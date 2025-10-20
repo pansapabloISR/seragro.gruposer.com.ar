@@ -95,20 +95,23 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
-### Unified Communication System (Latest Update)
+### Unified Communication System (Latest Update - Oct 20, 2025)
 - **Created unified-contact.js**: Single-button multi-channel communication hub
   - Replaced separate WhatsApp and Mavilda floating buttons with one unified button
   - Implemented 3-option menu: WhatsApp, Chat, and Voice Calls
   - Added Vapi Voice AI integration for real-time customer support calls
   - Menu appears with slide-in animation and staggered delays (0.05s between options)
   - Call indicator with red pulsing animation for active voice calls
+  - **waitForVapi() function**: Waits up to 5 seconds for Vapi SDK to load from CDN before initializing
+  - **Smart button visibility**: Button only hides when chat or call are active, stays visible during menu open
 - **Refactored mavilda-chat.js**: Converted to invocable module
   - Removed standalone floating button
   - Exposed public API: window.MavildaChat.open() and .close()
   - Maintains all chat functionality (sessions, auto-greeting, webhook integration)
+  - Calls UnifiedContact.show() when chat closes to restore main button
 - **Updated main-app.js**: Removed standalone WhatsApp button code
 - **Added Vapi SDK**: Loaded from CDN across all pages for voice call functionality
-- **Cache-busting version updated to v=1760957479** (JS and CSS)
+- **Cache-busting version updated to v=1760960422** (JS and CSS)
 
 ### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
