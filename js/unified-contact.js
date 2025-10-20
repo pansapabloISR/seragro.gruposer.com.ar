@@ -32,12 +32,11 @@
                 // Debug: ver qué hay disponible en window
                 if (attempts === 1) {
                     console.log('🔍 Buscando Vapi SDK...');
-                    console.log('window.Vapi:', window.Vapi);
                     console.log('window.vapiSDK:', window.vapiSDK);
                 }
                 
-                // Chequear si Vapi está disponible (puede ser window.Vapi o el constructor directo)
-                if (window.Vapi || (typeof Vapi !== 'undefined')) {
+                // Chequear si vapiSDK está disponible (API oficial para HTML)
+                if (window.vapiSDK && typeof window.vapiSDK.run === 'function') {
                     clearInterval(checkVapi);
                     console.log('✅ Vapi SDK cargado y listo');
                     vapiReady = true;
@@ -461,27 +460,20 @@
             }
         }
 
-        // Inicializar Vapi si no está inicializado
-        if (!vapiInstance && window.Vapi) {
-            try {
-                vapiInstance = new window.Vapi(CONFIG.vapiPublicKey);
-                console.log('✅ Vapi inicializado correctamente');
-            } catch (error) {
-                console.error('❌ Error al inicializar Vapi:', error);
-                alert('Error al iniciar la llamada. Por favor, intentá de nuevo.');
-                return;
-            }
-        }
-
-        if (!vapiInstance) {
-            console.error('❌ Vapi SDK no está disponible después de inicialización');
-            alert('El sistema de llamadas no está disponible en este momento.');
-            return;
-        }
-
         try {
-            // Iniciar la llamada
-            await vapiInstance.start(CONFIG.vapiAssistantId);
+            // Iniciar la llamada con la API oficial de Vapi para HTML
+            await window.vapiSDK.run({
+                apiKey: CONFIG.vapiPublicKey,
+                assistant: CONFIG.vapiAssistantId,
+                config: {
+                    transcriber: {
+                        provider: "deepgram",
+                        model: "nova-2",
+                        language: "es"
+                    }
+                }
+            });
+            
             inCall = true;
             
             // Mostrar indicador de llamada y ocultar botón principal
@@ -498,8 +490,8 @@
     }
 
     function endCall() {
-        if (vapiInstance && inCall) {
-            vapiInstance.stop();
+        if (inCall) {
+            // La API de Vapi HTML maneja el stop internamente
             inCall = false;
             
             // Ocultar indicador de llamada
