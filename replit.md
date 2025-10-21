@@ -111,7 +111,9 @@ Preferred communication style: Simple, everyday language.
   - Calls UnifiedContact.show() when chat closes to restore main button
 - **Updated main-app.js**: Removed standalone WhatsApp button code
 - **Added Vapi SDK**: Loaded from CDN across all pages for voice call functionality
-- **Cache-busting version updated to v=1760960422** (JS and CSS)
+- **Cache-busting version updated to v=1761058831** (JS and CSS) - Oct 21, 2025
+  - Added dynamic cache-busting to Mavilda avatar image using `${Date.now()}` to prevent browser caching issues
+  - Image now reloads fresh every time chat is opened
 
 ### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
