@@ -74,10 +74,12 @@ Preferred communication style: Simple, everyday language.
   - Purpose: AI chat assistant backend for customer support
   - Session-based conversation management
 - **Vapi Voice AI**: Voice call integration for customer support
-  - CDN: `https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest`
+  - CDN: `https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js` (HTML Script Tag)
   - Public Key: `5a29292f-d9cc-4a21-bb7e-ff8df74763cd`
   - Assistant ID: `776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4`
-  - Enables real-time voice conversations with AI assistant
+  - Implementation: `window.vapiSDK.run()` WITHOUT `config` parameter (no default UI)
+  - Programmatic control: `vapiInstance.start()` and `vapiInstance.stop()`
+  - Enables real-time voice conversations with AI assistant using only custom UI
 
 ### External Resources
 - **Google Fonts**: Open Sans font family for typography
@@ -95,23 +97,27 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
-### Unified Communication System (Latest Update - Oct 20, 2025)
+### Unified Communication System (Latest Update - Oct 21, 2025)
 - **Created unified-contact.js**: Single-button multi-channel communication hub
   - Replaced separate WhatsApp and Mavilda floating buttons with one unified button
   - Implemented 3-option menu: WhatsApp, Chat, and Voice Calls
   - Added Vapi Voice AI integration for real-time customer support calls
   - Menu appears with slide-in animation and staggered delays (0.05s between options)
   - Call indicator with red pulsing animation for active voice calls
-  - **waitForVapi() function**: Waits up to 5 seconds for Vapi SDK to load from CDN before initializing
+  - **waitForVapi() function**: Waits for `window.vapiSDK` to load from CDN before initializing
   - **Smart button visibility**: Button only hides when chat or call are active, stays visible during menu open
+  - **Vapi Implementation**: Uses HTML Script Tag with lazy initialization
+    - Calls `window.vapiSDK.run()` WITHOUT `config` parameter = no default button/UI
+    - Stores returned instance and controls calls with `.start()` and `.stop()`
+    - Initialization happens only when user clicks "Llamar" (on-demand)
 - **Refactored mavilda-chat.js**: Converted to invocable module
   - Removed standalone floating button
   - Exposed public API: window.MavildaChat.open() and .close()
   - Maintains all chat functionality (sessions, auto-greeting, webhook integration)
   - Calls UnifiedContact.show() when chat closes to restore main button
 - **Updated main-app.js**: Removed standalone WhatsApp button code
-- **Added Vapi SDK**: Loaded from CDN across all pages for voice call functionality
-- **Cache-busting version updated to v=1760960422** (JS and CSS)
+- **Added Vapi SDK**: HTML Script Tag loaded across all pages for voice call functionality
+- **Cache-busting version updated to v=1761076948** (JS and CSS)
 
 ### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
