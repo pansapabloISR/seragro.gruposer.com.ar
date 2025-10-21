@@ -77,7 +77,10 @@ Preferred communication style: Simple, everyday language.
   - CDN: `https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js` (HTML Script Tag)
   - Public Key: `5a29292f-d9cc-4a21-bb7e-ff8df74763cd`
   - Assistant ID: `776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4`
-  - Implementation: `window.vapiSDK.run()` WITHOUT `config` parameter (no default UI)
+  - Implementation: Invisible widget technique
+    - Widget exists (functional audio/microphone) but is hidden with CSS
+    - `window.vapiSDK.run()` WITH `config: { width: "0px", height: "0px" }`
+    - CSS rule `.vapi-btn { display: none !important; }` hides all widget states
   - Programmatic control: `vapiInstance.start()` and `vapiInstance.stop()`
   - Enables real-time voice conversations with AI assistant using only custom UI
 
@@ -106,9 +109,11 @@ Preferred communication style: Simple, everyday language.
   - Call indicator with red pulsing animation for active voice calls
   - **waitForVapi() function**: Waits for `window.vapiSDK` to load from CDN before initializing
   - **Smart button visibility**: Button only hides when chat or call are active, stays visible during menu open
-  - **Vapi Implementation**: Uses HTML Script Tag with lazy initialization
-    - Calls `window.vapiSDK.run()` WITHOUT `config` parameter = no default button/UI
-    - Stores returned instance and controls calls with `.start()` and `.stop()`
+  - **Vapi Implementation**: Invisible widget technique (community-recommended approach)
+    - Widget loads WITH config but is hidden: `config: { width: "0px", height: "0px" }`
+    - CSS rules in style.css hide all Vapi button states (`.vapi-btn { display: none !important; }`)
+    - Widget exists (functional audio/micrófono) but completely invisible
+    - Custom UI controls the invisible widget via `.start()` and `.stop()`
     - Initialization happens only when user clicks "Llamar" (on-demand)
 - **Refactored mavilda-chat.js**: Converted to invocable module
   - Removed standalone floating button
@@ -117,7 +122,7 @@ Preferred communication style: Simple, everyday language.
   - Calls UnifiedContact.show() when chat closes to restore main button
 - **Updated main-app.js**: Removed standalone WhatsApp button code
 - **Added Vapi SDK**: HTML Script Tag loaded across all pages for voice call functionality
-- **Cache-busting version updated to v=1761076948** (JS and CSS)
+- **Cache-busting version updated to v=1761078437** (JS and CSS)
 
 ### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
