@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Sitio web corporativo para SER AGRO, especialistas en drones agrícolas DJI.",
   "main": "main-app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
