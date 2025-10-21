@@ -95,7 +95,22 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
-### Unified Communication System (Latest Update - Oct 20, 2025)
+### Vapi Voice Integration Fix - FINAL (Oct 21, 2025)
+- **Root cause identified**: Conflicting SDK versions loaded simultaneously
+  - HTML Script Tag SDK loaded in `<head>` (correct)
+  - Web SDK (@vapi-ai/web@2.4.0) also loaded in footer (duplicate, causing conflicts)
+  - Both SDKs competed for control, preventing calls from initiating
+- **Solution**: Removed duplicate Web SDK from all 5 HTML files
+  - Now using ONLY HTML Script Tag SDK: `https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js`
+  - Loaded synchronously (blocking) in `<head>` to ensure `window.vapiSDK` is available
+  - API: `window.vapiSDK.run({ apiKey, assistant })` - simplified configuration
+- **Voice calls now working**:
+  - Logs confirm: "✅ Llamada iniciada correctamente" and "✅ Llamada finalizada"
+  - Custom UI only - red "En llamada..." indicator shown during calls
+  - Vapi's default widget remains hidden
+- **Cache-busting updated to v=1761070436** (Oct 21, 2025)
+
+### Unified Communication System (Oct 20, 2025)
 - **Created unified-contact.js**: Single-button multi-channel communication hub
   - Replaced separate WhatsApp and Mavilda floating buttons with one unified button
   - Implemented 3-option menu: WhatsApp, Chat, and Voice Calls
