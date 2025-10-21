@@ -73,29 +73,19 @@ Preferred communication style: Simple, everyday language.
   - URL: `https://primary-production-396f31.up.railway.app/webhook/mavilda-chat`
   - Purpose: AI chat assistant backend for customer support
   - Session-based conversation management
-- **Vapi Voice AI**: Voice call integration for customer support  
-  - NPM Package: `@vapi-ai/web` v2.5.0 (installed locally via npm)
+- **Vapi Voice AI**: Voice call integration for customer support
+  - CDN: `https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest`
   - Public Key: `5a29292f-d9cc-4a21-bb7e-ff8df74763cd`
   - Assistant ID: `776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4`
   - Enables real-time voice conversations with AI assistant
-  - Loaded as ES module import in unified-contact.js
 
 ### External Resources
 - **Google Fonts**: Open Sans font family for typography
 - **Font Awesome**: Icon library (Kit: 14b830158f.js) used in some components
 
-### Build & Development
-- **Vite**: Frontend build tool and dev server (v7.1.11)
-  - Processes ES modules and npm packages
-  - Dev server runs on port 5000 with HMR (Hot Module Replacement)
-  - Configured in `vite.config.js` with host: 0.0.0.0, allowedHosts: true
-- **Server Setup**: `server.py` acts as wrapper to exec `npm run dev`
-  - Ensures compatibility with existing Replit workflow configuration
-  - Vite handles all static file serving and module bundling
-
 ### Deployment Platform
 - **Replit Hosting**: Site is configured for deployment on Replit's hosting service
-- **Build Process**: Vite bundles JavaScript modules including @vapi-ai/web dependency
+- **No Build Process**: Static files served directly without compilation or bundling
 
 ### Contact Information
 - Phone: +54 (93465) 432688
@@ -105,29 +95,14 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
-### Migration to Vite & ES Modules (Oct 21, 2025)
-- **Migrated from CDN to npm-based Vapi SDK**: Resolved module loading issues
-  - Installed `@vapi-ai/web` v2.5.0 via npm for reliable dependency management
-  - Configured Vite as build tool and dev server (replaces simple Python HTTP server)
-  - All JavaScript files now use ES module syntax (`import`/`export`)
-  - HTML pages load scripts with `<script type="module">` tags
-- **Vapi Integration Improvements**:
-  - `unified-contact.js` now imports Vapi class directly: `import Vapi from "@vapi-ai/web"`
-  - Vapi client instantiated on page load with event listeners (call-start, call-end, error)
-  - Custom UI only - no default Vapi widget shown (hidden via CSS)
-  - Voice calls initiated with `vapiClient.start(assistantId)` and stopped with `vapiClient.stop()`
-- **Server Configuration**:
-  - `server.py` now wrapper script that executes `npm run dev` (runs Vite)
-  - Vite dev server handles module bundling, HMR, and static file serving on port 5000
-  - Workflow still named "Server" and uses `restart_workflow` for restarts
-- **Removed cache-busting query parameters** - Vite handles module versioning automatically
-
-### Unified Communication System (Oct 20, 2025)
+### Unified Communication System (Latest Update - Oct 20, 2025)
 - **Created unified-contact.js**: Single-button multi-channel communication hub
   - Replaced separate WhatsApp and Mavilda floating buttons with one unified button
   - Implemented 3-option menu: WhatsApp, Chat, and Voice Calls
+  - Added Vapi Voice AI integration for real-time customer support calls
   - Menu appears with slide-in animation and staggered delays (0.05s between options)
   - Call indicator with red pulsing animation for active voice calls
+  - **waitForVapi() function**: Waits up to 5 seconds for Vapi SDK to load from CDN before initializing
   - **Smart button visibility**: Button only hides when chat or call are active, stays visible during menu open
 - **Refactored mavilda-chat.js**: Converted to invocable module
   - Removed standalone floating button
@@ -135,10 +110,15 @@ Preferred communication style: Simple, everyday language.
   - Maintains all chat functionality (sessions, auto-greeting, webhook integration)
   - Calls UnifiedContact.show() when chat closes to restore main button
 - **Updated main-app.js**: Removed standalone WhatsApp button code
+- **Added Vapi SDK**: Loaded from CDN across all pages for voice call functionality
+- **Cache-busting version updated to v=1760960422** (JS and CSS)
 
-### JavaScript Architecture (Earlier Oct 2025)
+### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
 - Renamed `js/chat-widget.js` → `js/mavilda-chat.js` for better cache management
+- Implemented aggressive cache-busting strategy with version parameters
+- Custom Python HTTP server (`server.py`) with no-cache headers to prevent browser caching issues
+- Added SO_REUSEADDR to server.py for immediate port reuse after restart
 
 ### UI/UX Improvements
 - Unified contact button: "Hablá con nosotros" at 100px from bottom, 20px from right
