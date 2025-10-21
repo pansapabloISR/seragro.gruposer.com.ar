@@ -33,7 +33,7 @@
                 <div id="mavilda-chat-window" style="display: none;">
                     <div id="mavilda-chat-header">
                         <div class="header-content">
-                            <img src="imagenes/mavilda ingeniera agronoma.png" alt="Mavilda" class="chat-logo">
+                            <img src="imagenes/mavilda ingeniera agronoma.png?v=${Date.now()}" alt="Mavilda" class="chat-logo">
                             <div class="header-text">
                                 <strong>Mavilda</strong>
                                 <span>Ingeniera Agrónoma</span>
