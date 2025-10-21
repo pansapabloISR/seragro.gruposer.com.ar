@@ -99,17 +99,17 @@ Preferred communication style: Simple, everyday language.
 ## Recent Changes (October 2025)
 
 ### Vapi Voice Integration Fix (Oct 21, 2025)
-- **Switched from Web SDK to HTML Script Tag SDK**: User reported Web SDK not loading from CDN
-  - Removed Web SDK (`@vapi-ai/web@2.4.0`) which wasn't loading in browser
-  - Now using HTML Script Tag SDK (`https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js`)
+- **Fixed breaking API change**: Vapi SDK renamed `assistant` → `assistantPublicIdentifier`
+  - Root cause: HTML Script Tag SDK updated and changed field name, breaking calls after deployment
+  - Solution: Updated `unified-contact.js` to use `assistantPublicIdentifier` instead of `assistant`
+  - Voice calls now working correctly in both development and production
+- **Using HTML Script Tag SDK**: `https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js`
   - Loaded synchronously (blocking) before other scripts to ensure `window.vapiSDK` is available
-- **Rewritten unified-contact.js**: Updated to use Vapi HTML Script Tag SDK API
-  - Changed `waitForVapi()` to detect `window.vapiSDK` instead of `window.Vapi`
-  - Updated `handleCallClick()` to use `window.vapiSDK.run({ apiKey, assistant, config })` API
+  - API: `window.vapiSDK.run({ apiKey, assistantPublicIdentifier, config })`
   - Button configured with 0px width/height to hide Vapi's default floating widget
   - Custom UI only - red "En llamada..." indicator shown during calls
   - Event handlers: 'call-start', 'call-end', 'error' properly attached to vapiInstance
-- **Cache-busting updated to v=1761067667** (Oct 21, 2025)
+- **Cache-busting updated to v=1761069269** (Oct 21, 2025)
   - Updated all 5 HTML files with new version for JS and CSS files
   - Forces browser reload of updated code across all pages
 
