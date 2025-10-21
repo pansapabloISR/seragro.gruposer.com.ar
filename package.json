@@ -1,0 +1,28 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "Sitio web corporativo para SER AGRO, especialistas en drones agrícolas DJI.",
+  "main": "main-app.js",
+  "dependencies": {
+    "@vapi-ai/web": "^2.5.0",
+    "bowser": "^2.12.1",
+    "dequal": "^2.0.3",
+    "esbuild": "^0.25.11",
+    "events": "^3.3.0",
+    "fdir": "^6.5.0",
+    "nanoid": "^3.3.11",
+    "picocolors": "^1.1.1",
+    "picomatch": "^4.0.3",
+    "postcss": "^8.5.6",
+    "rollup": "^4.52.5",
+    "source-map-js": "^1.2.1",
+    "tinyglobby": "^0.2.15",
+    "vite": "^7.1.11"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
