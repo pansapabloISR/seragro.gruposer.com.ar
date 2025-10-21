@@ -1873,3 +1873,17 @@ ul li::before {
         right: 50px !important;
     }
 }
+/* ==========================================
+   OCULTAR WIDGET DE VAPI (invisible pero funcional)
+   ========================================== */
+.vapi-btn,
+.vapi-btn-idle,
+.vapi-btn-loading,
+.vapi-btn-active {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+}
