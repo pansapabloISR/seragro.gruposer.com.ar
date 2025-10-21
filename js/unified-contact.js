@@ -15,46 +15,8 @@
     };
 
     let menuOpen = false;
-    let vapiClient = null;
+    let vapiInstance = null;
     let inCall = false;
-
-    // ==========================================
-    // INICIALIZAR VAPI CLIENT
-    // ==========================================
-    function initializeVapiClient() {
-        if (vapiClient) return vapiClient;
-
-        try {
-            // Crear instancia del cliente Vapi
-            vapiClient = new window.Vapi({ apiKey: CONFIG.vapiPublicKey });
-
-            // Escuchar eventos de llamada
-            vapiClient.on('call-start', () => {
-                console.log('✅ Llamada iniciada - evento call-start');
-                inCall = true;
-                showCallIndicator();
-            });
-
-            vapiClient.on('call-end', () => {
-                console.log('✅ Llamada terminada - evento call-end');
-                inCall = false;
-                hideCallIndicator();
-            });
-
-            vapiClient.on('error', (error) => {
-                console.error('❌ Error en llamada Vapi:', error);
-                inCall = false;
-                hideCallIndicator();
-                alert('Ocurrió un error durante la llamada. Por favor, intentá de nuevo.');
-            });
-
-            console.log('✅ Cliente Vapi inicializado correctamente');
-            return vapiClient;
-        } catch (error) {
-            console.error('❌ Error al crear cliente Vapi:', error);
-            return null;
-        }
-    }
 
     // ==========================================
     // MOSTRAR/OCULTAR INDICADOR DE LLAMADA
@@ -479,23 +441,20 @@
         toggleMenu();
 
         try {
-            // Verificar que Vapi esté disponible
-            if (!window.Vapi) {
-                throw new Error('Vapi SDK no cargado');
+            // Inicializar Vapi si aún no está hecho
+            if (!vapiInstance) {
+                await initializeVapi();
             }
 
-            // Inicializar cliente si no existe
-            if (!vapiClient) {
-                initializeVapiClient();
-            }
-
-            if (!vapiClient) {
-                throw new Error('No se pudo inicializar el cliente Vapi');
+            if (!vapiInstance) {
+                throw new Error('No se pudo inicializar Vapi');
             }
 
             // Iniciar la llamada
             console.log('🎯 Iniciando llamada de voz...');
-            await vapiClient.start(CONFIG.vapiAssistantId);
+            vapiInstance.start();
+            inCall = true;
+            showCallIndicator();
             console.log('✅ Llamada iniciada correctamente');
 
         } catch (error) {
@@ -507,17 +466,72 @@
     }
 
     function endCall() {
-        if (vapiClient && inCall) {
+        if (vapiInstance && inCall) {
             try {
                 console.log('🛑 Deteniendo llamada...');
-                vapiClient.stop();
+                vapiInstance.stop();
+                inCall = false;
+                hideCallIndicator();
+                console.log('✅ Llamada finalizada');
             } catch (error) {
                 console.error('❌ Error al detener llamada:', error);
-                // Forzar limpieza del estado
                 inCall = false;
                 hideCallIndicator();
             }
         }
+    }
+
+    // ==========================================
+    // INICIALIZAR VAPI (SIN UI)
+    // ==========================================
+    async function initializeVapi() {
+        if (vapiInstance) return vapiInstance;
+
+        // Esperar a que window.vapiSDK esté disponible
+        await waitForVapi();
+
+        try {
+            // Inicializar Vapi SIN config = sin botón por defecto
+            vapiInstance = window.vapiSDK.run({
+                apiKey: CONFIG.vapiPublicKey,
+                assistant: CONFIG.vapiAssistantId
+                // NO pasar 'config' = no muestra botón
+            });
+
+            console.log('✅ Vapi inicializado correctamente (sin UI por defecto)');
+            return vapiInstance;
+        } catch (error) {
+            console.error('❌ Error al inicializar Vapi:', error);
+            return null;
+        }
+    }
+
+    // ==========================================
+    // ESPERAR A QUE VAPI SE CARGUE
+    // ==========================================
+    function waitForVapi(maxAttempts = 30, interval = 200) {
+        return new Promise((resolve, reject) => {
+            let attempts = 0;
+            
+            const checkVapi = setInterval(() => {
+                attempts++;
+                
+                if (attempts === 1) {
+                    console.log('🔍 Esperando que Vapi SDK se cargue...');
+                }
+                
+                // Chequear window.vapiSDK (HTML Script Tag)
+                if (window.vapiSDK && typeof window.vapiSDK.run === 'function') {
+                    clearInterval(checkVapi);
+                    console.log('✅ Vapi SDK (HTML Script Tag) cargado correctamente');
+                    resolve(true);
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkVapi);
+                    console.error('❌ Timeout esperando Vapi SDK. window.vapiSDK:', window.vapiSDK);
+                    reject(new Error('Vapi SDK no disponible'));
+                }
+            }, interval);
+        });
     }
 
     // ==========================================
@@ -533,21 +547,8 @@
         createCallIndicator();
         addStyles();
         
-        // Inicializar cliente Vapi cuando esté disponible
-        if (window.Vapi) {
-            initializeVapiClient();
-        } else {
-            // Esperar a que se cargue el SDK
-            window.addEventListener('load', () => {
-                if (window.Vapi) {
-                    initializeVapiClient();
-                } else {
-                    console.warn('⚠️ Vapi SDK no disponible después de cargar la página');
-                }
-            });
-        }
-        
         console.log('✅ Sistema de comunicación unificado cargado correctamente');
+        // Vapi se inicializará solo cuando el usuario haga clic en "Llamar"
     }
 
     // Ejecutar cuando el DOM esté listo
