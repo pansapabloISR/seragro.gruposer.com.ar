@@ -441,24 +441,26 @@
         toggleMenu();
 
         try {
-            // Inicializar Vapi si aún no está hecho
+            // Verificar que Vapi esté disponible
+            if (!window.Vapi) {
+                throw new Error('Vapi SDK no cargado');
+            }
+
+            // Inicializar cliente si no existe
             if (!vapiInstance) {
-                await initializeVapi();
+                initializeVapiClient();
             }
 
             if (!vapiInstance) {
-                throw new Error('No se pudo inicializar Vapi');
+                throw new Error('No se pudo inicializar el cliente Vapi');
             }
 
             // Iniciar la llamada
-            console.log('🎯 Iniciando llamada de voz...');
-            vapiInstance.start();
-            inCall = true;
-            showCallIndicator();
-            console.log('✅ Llamada iniciada correctamente');
+            console.log('Iniciando llamada con Vapi...');
+            await vapiInstance.start(CONFIG.vapiAssistantId);
 
         } catch (error) {
-            console.error('❌ Error al iniciar llamada:', error);
+            console.error('Error al iniciar llamada:', error);
             alert('No se pudo iniciar la llamada. Por favor, intentá de nuevo.');
             inCall = false;
             hideCallIndicator();
@@ -468,13 +470,10 @@
     function endCall() {
         if (vapiInstance && inCall) {
             try {
-                console.log('🛑 Deteniendo llamada...');
                 vapiInstance.stop();
-                inCall = false;
-                hideCallIndicator();
-                console.log('✅ Llamada finalizada');
             } catch (error) {
-                console.error('❌ Error al detener llamada:', error);
+                console.error('Error al detener llamada:', error);
+                // Forzar limpieza del estado
                 inCall = false;
                 hideCallIndicator();
             }
@@ -482,62 +481,41 @@
     }
 
     // ==========================================
-    // INICIALIZAR VAPI (WIDGET INVISIBLE)
+    // INICIALIZAR VAPI CLIENT
     // ==========================================
-    async function initializeVapi() {
+    function initializeVapiClient() {
         if (vapiInstance) return vapiInstance;
 
-        // Esperar a que window.vapiSDK esté disponible
-        await waitForVapi();
-
         try {
-            // Inicializar Vapi CON widget pero invisible (width/height = 0)
-            // El widget existe (por eso funciona audio/micrófono) pero no se ve
-            vapiInstance = window.vapiSDK.run({
-                apiKey: CONFIG.vapiPublicKey,
-                assistant: CONFIG.vapiAssistantId,
-                config: {
-                    width: "0px",
-                    height: "0px",
-                    position: "bottom-right",
-                    offset: "0px"
-                }
+            // Crear instancia del cliente Vapi
+            vapiInstance = new window.Vapi(CONFIG.vapiPublicKey);
+
+            // Escuchar eventos de llamada
+            vapiInstance.on('call-start', () => {
+                console.log('Llamada iniciada');
+                inCall = true;
+                showCallIndicator();
             });
 
-            console.log('✅ Vapi inicializado con widget invisible');
+            vapiInstance.on('call-end', () => {
+                console.log('Llamada detenida por el usuario');
+                inCall = false;
+                hideCallIndicator();
+            });
+
+            vapiInstance.on('error', (error) => {
+                console.error('Error en llamada Vapi:', error);
+                inCall = false;
+                hideCallIndicator();
+                alert('Ocurrió un error durante la llamada. Por favor, intentá de nuevo.');
+            });
+
+            console.log('Cliente de Vapi inicializado');
             return vapiInstance;
         } catch (error) {
-            console.error('❌ Error al inicializar Vapi:', error);
+            console.error('Error al crear cliente Vapi:', error);
             return null;
         }
-    }
-
-    // ==========================================
-    // ESPERAR A QUE VAPI SE CARGUE
-    // ==========================================
-    function waitForVapi(maxAttempts = 30, interval = 200) {
-        return new Promise((resolve, reject) => {
-            let attempts = 0;
-            
-            const checkVapi = setInterval(() => {
-                attempts++;
-                
-                if (attempts === 1) {
-                    console.log('🔍 Esperando que Vapi SDK se cargue...');
-                }
-                
-                // Chequear window.vapiSDK (HTML Script Tag)
-                if (window.vapiSDK && typeof window.vapiSDK.run === 'function') {
-                    clearInterval(checkVapi);
-                    console.log('✅ Vapi SDK (HTML Script Tag) cargado correctamente');
-                    resolve(true);
-                } else if (attempts >= maxAttempts) {
-                    clearInterval(checkVapi);
-                    console.error('❌ Timeout esperando Vapi SDK. window.vapiSDK:', window.vapiSDK);
-                    reject(new Error('Vapi SDK no disponible'));
-                }
-            }, interval);
-        });
     }
 
     // ==========================================
@@ -553,8 +531,7 @@
         createCallIndicator();
         addStyles();
         
-        console.log('✅ Sistema de comunicación unificado cargado correctamente');
-        // Vapi se inicializará solo cuando el usuario haga clic en "Llamar"
+        console.log('Sistema de comunicación unificado cargado correctamente');
     }
 
     // Ejecutar cuando el DOM esté listo
