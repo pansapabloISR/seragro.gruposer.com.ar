@@ -24,12 +24,12 @@
                 attempts++;
                 
                 if (attempts === 1) {
-                    console.log('🔍 Buscando Vapi SDK...');
+                    console.log('🔍 Buscando Vapi HTML Script Tag SDK...');
                 }
                 
-                if (window.Vapi && typeof window.Vapi === 'function') {
+                if (window.vapiSDK && typeof window.vapiSDK.run === 'function') {
                     clearInterval(checkVapi);
-                    console.log('✅ Vapi Web SDK cargado y listo');
+                    console.log('✅ Vapi HTML Script Tag SDK cargado y listo');
                     vapiReady = true;
                     resolve(true);
                 } else if (attempts >= maxAttempts) {
@@ -435,31 +435,40 @@
         }
 
         try {
-            console.log('🎯 Iniciando llamada con Vapi Web SDK...');
+            console.log('🎯 Iniciando llamada con Vapi HTML Script Tag SDK...');
             
-            vapiInstance = new window.Vapi(CONFIG.vapiPublicKey);
-            
-            vapiInstance.on('call-start', () => {
-                console.log('✅ Llamada iniciada');
-                inCall = true;
-                const indicator = document.getElementById('call-indicator');
-                const mainButton = document.getElementById('unified-contact-button');
-                indicator.classList.add('active');
-                mainButton.style.display = 'none';
+            vapiInstance = window.vapiSDK.run({
+                apiKey: CONFIG.vapiPublicKey,
+                assistant: CONFIG.vapiAssistantId,
+                config: {
+                    position: 'bottom-right',
+                    offset: '0px',
+                    width: '0px',
+                    height: '0px'
+                }
             });
             
-            vapiInstance.on('call-end', () => {
-                console.log('📞 Llamada finalizada');
-                endCall();
-            });
-            
-            vapiInstance.on('error', (error) => {
-                console.error('❌ Error en la llamada:', error);
-                alert('Ocurrió un error durante la llamada.');
-                endCall();
-            });
-            
-            await vapiInstance.start(CONFIG.vapiAssistantId);
+            if (vapiInstance) {
+                vapiInstance.on('call-start', () => {
+                    console.log('✅ Llamada iniciada');
+                    inCall = true;
+                    const indicator = document.getElementById('call-indicator');
+                    const mainButton = document.getElementById('unified-contact-button');
+                    indicator.classList.add('active');
+                    mainButton.style.display = 'none';
+                });
+                
+                vapiInstance.on('call-end', () => {
+                    console.log('📞 Llamada finalizada');
+                    endCall();
+                });
+                
+                vapiInstance.on('error', (error) => {
+                    console.error('❌ Error en la llamada:', error);
+                    alert('Ocurrió un error durante la llamada.');
+                    endCall();
+                });
+            }
             
         } catch (error) {
             console.error('❌ Error al iniciar llamada:', error);
@@ -470,8 +479,10 @@
     function endCall() {
         if (vapiInstance) {
             try {
-                vapiInstance.stop();
-                console.log('✅ Llamada detenida');
+                if (typeof vapiInstance.stop === 'function') {
+                    vapiInstance.stop();
+                    console.log('✅ Llamada detenida');
+                }
             } catch (error) {
                 console.error('❌ Error al detener llamada:', error);
             }
