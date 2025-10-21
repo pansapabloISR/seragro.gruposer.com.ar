@@ -74,11 +74,13 @@ Preferred communication style: Simple, everyday language.
   - Purpose: AI chat assistant backend for customer support
   - Session-based conversation management
 - **Vapi Voice AI**: Voice call integration for customer support
-  - CDN: `https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.4.0` (Web SDK)
+  - CDN: `https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js` (HTML Script Tag SDK)
   - Public Key: `5a29292f-d9cc-4a21-bb7e-ff8df74763cd`
   - Assistant ID: `776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4`
   - Enables real-time voice conversations with AI assistant
-  - Uses Web SDK with event-driven API (call-start, call-end, error events)
+  - Uses HTML Script Tag SDK with `window.vapiSDK.run()` API
+  - Event-driven: call-start, call-end, error events
+  - Custom UI only - Vapi's default widget hidden via CSS
 
 ### External Resources
 - **Google Fonts**: Open Sans font family for typography
@@ -97,16 +99,18 @@ Preferred communication style: Simple, everyday language.
 ## Recent Changes (October 2025)
 
 ### Vapi Voice Integration Fix (Oct 21, 2025)
-- **Fixed Vapi SDK conflicts**: Removed duplicate HTML Script Tag SDK from all HTML files
-  - Was loading TWO Vapi SDKs: HTML Script Tag (@latest) + Web SDK (@2.4.0) causing conflicts
-  - Now using only Web SDK (@2.4.0) for consistent, reliable voice call integration
-- **Rewritten unified-contact.js**: Updated to use correct Vapi Web SDK API
-  - Changed from `window.vapiSDK.run()` (old HTML Script Tag API) to `new window.Vapi()` (Web SDK)
-  - Implemented proper event handlers: 'call-start', 'call-end', 'error'
-  - Proper lifecycle: `vapi.start(assistantId)` and `vapi.stop()` methods
-  - Custom UI only - Vapi's default widget hidden via CSS
-- **Cache-busting updated to v=1761065391** (Oct 21, 2025)
-  - Updated all HTML files with new version for JS and CSS files
+- **Switched from Web SDK to HTML Script Tag SDK**: User reported Web SDK not loading from CDN
+  - Removed Web SDK (`@vapi-ai/web@2.4.0`) which wasn't loading in browser
+  - Now using HTML Script Tag SDK (`https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js`)
+  - Loaded synchronously (blocking) before other scripts to ensure `window.vapiSDK` is available
+- **Rewritten unified-contact.js**: Updated to use Vapi HTML Script Tag SDK API
+  - Changed `waitForVapi()` to detect `window.vapiSDK` instead of `window.Vapi`
+  - Updated `handleCallClick()` to use `window.vapiSDK.run({ apiKey, assistant, config })` API
+  - Button configured with 0px width/height to hide Vapi's default floating widget
+  - Custom UI only - red "En llamada..." indicator shown during calls
+  - Event handlers: 'call-start', 'call-end', 'error' properly attached to vapiInstance
+- **Cache-busting updated to v=1761067667** (Oct 21, 2025)
+  - Updated all 5 HTML files with new version for JS and CSS files
   - Forces browser reload of updated code across all pages
 
 ### Unified Communication System (Oct 20, 2025)
