@@ -1,14 +1,13 @@
 entrypoint = "index.html"
-modules = ["web", "python-3.11", "nodejs-20"]
+modules = ["web", "python-3.11"]
 
 [nix]
 channel = "stable-24_11"
 packages = ["static-web-server"]
 
 [deployment]
-deploymentTarget = "autoscale"
-run = ["npx", "vite", "preview", "--port", "5000", "--host", "0.0.0.0"]
-build = ["npm", "run", "build"]
+publicDir = "/"
+deploymentTarget = "static"
 
 [workflows]
 runButton = "Project"
@@ -33,7 +32,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev"
+args = "python3 server.py"
 waitForPort = 5000
 
 [workflows.workflow.metadata]
@@ -49,3 +48,7 @@ externalPort = 5000
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 33315
+externalPort = 3000
