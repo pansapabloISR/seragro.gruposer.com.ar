@@ -74,7 +74,7 @@ Preferred communication style: Simple, everyday language.
   - Purpose: AI chat assistant backend for customer support
   - Session-based conversation management
 - **Vapi Voice AI**: Voice call integration for customer support
-  - CDN: `https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js`
+  - CDN: `https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest`
   - Public Key: `5a29292f-d9cc-4a21-bb7e-ff8df74763cd`
   - Assistant ID: `776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4`
   - Enables real-time voice conversations with AI assistant
@@ -95,24 +95,7 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
-### Vapi Voice Integration - WORKING VERSION RESTORED (Oct 21, 2025)
-- **Restored working version from commit ea1860b**
-  - Multiple fix attempts failed due to SDK conflicts between HTML Script Tag SDK and Web SDK
-  - User reported working version in production, identified as commit ea1860b
-  - Restored all files (HTML pages and unified-contact.js) to that commit
-- **Working configuration**:
-  - Uses HTML Script Tag SDK: `https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js`
-  - Loaded async/defer in footer (NOT in head, NOT synchronously)
-  - API: `window.vapiSDK.run({ apiKey, assistant, config })` with hidden widget config
-  - Events: `vapiInstance.on('call-start', ...)` and `vapiInstance.on('call-end', ...)`
-  - Config hides Vapi's default widget: `position: 'bottom-right', offset: '0px', width: '0px', height: '0px'`
-- **Voice calls confirmed working**:
-  - Custom UI only - red "En llamada..." indicator shown during calls
-  - Vapi's default widget completely hidden
-  - WhatsApp and Mavilda chat continue functioning correctly
-- **Cache-busting updated to v=1761072117** (Oct 21, 2025)
-
-### Unified Communication System (Oct 20, 2025)
+### Unified Communication System (Latest Update - Oct 20, 2025)
 - **Created unified-contact.js**: Single-button multi-channel communication hub
   - Replaced separate WhatsApp and Mavilda floating buttons with one unified button
   - Implemented 3-option menu: WhatsApp, Chat, and Voice Calls
