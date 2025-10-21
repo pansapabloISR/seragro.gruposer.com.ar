@@ -74,10 +74,11 @@ Preferred communication style: Simple, everyday language.
   - Purpose: AI chat assistant backend for customer support
   - Session-based conversation management
 - **Vapi Voice AI**: Voice call integration for customer support
-  - CDN: `https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest`
+  - CDN: `https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.4.0` (Web SDK)
   - Public Key: `5a29292f-d9cc-4a21-bb7e-ff8df74763cd`
   - Assistant ID: `776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4`
   - Enables real-time voice conversations with AI assistant
+  - Uses Web SDK with event-driven API (call-start, call-end, error events)
 
 ### External Resources
 - **Google Fonts**: Open Sans font family for typography
@@ -95,7 +96,20 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
-### Unified Communication System (Latest Update - Oct 20, 2025)
+### Vapi Voice Integration Fix (Oct 21, 2025)
+- **Fixed Vapi SDK conflicts**: Removed duplicate HTML Script Tag SDK from all HTML files
+  - Was loading TWO Vapi SDKs: HTML Script Tag (@latest) + Web SDK (@2.4.0) causing conflicts
+  - Now using only Web SDK (@2.4.0) for consistent, reliable voice call integration
+- **Rewritten unified-contact.js**: Updated to use correct Vapi Web SDK API
+  - Changed from `window.vapiSDK.run()` (old HTML Script Tag API) to `new window.Vapi()` (Web SDK)
+  - Implemented proper event handlers: 'call-start', 'call-end', 'error'
+  - Proper lifecycle: `vapi.start(assistantId)` and `vapi.stop()` methods
+  - Custom UI only - Vapi's default widget hidden via CSS
+- **Cache-busting updated to v=1761065391** (Oct 21, 2025)
+  - Updated all HTML files with new version for JS and CSS files
+  - Forces browser reload of updated code across all pages
+
+### Unified Communication System (Oct 20, 2025)
 - **Created unified-contact.js**: Single-button multi-channel communication hub
   - Replaced separate WhatsApp and Mavilda floating buttons with one unified button
   - Implemented 3-option menu: WhatsApp, Chat, and Voice Calls
@@ -111,8 +125,7 @@ Preferred communication style: Simple, everyday language.
   - Calls UnifiedContact.show() when chat closes to restore main button
 - **Updated main-app.js**: Removed standalone WhatsApp button code
 - **Added Vapi SDK**: Loaded from CDN across all pages for voice call functionality
-- **Cache-busting version updated to v=1761058831** (JS and CSS) - Oct 21, 2025
-  - Added dynamic cache-busting to Mavilda avatar image using `${Date.now()}` to prevent browser caching issues
+- **Dynamic cache-busting for Mavilda avatar**: Using `${Date.now()}` to prevent browser caching issues
   - Image now reloads fresh every time chat is opened
 
 ### JavaScript Architecture Update

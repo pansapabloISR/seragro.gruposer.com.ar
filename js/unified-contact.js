@@ -128,7 +128,10 @@
 
         document.getElementById('option-whatsapp').addEventListener('click', handleWhatsAppClick);
         document.getElementById('option-chat').addEventListener('click', handleChatClick);
-        document.getElementById('option-call').addEventListener('click', handleCallClick);
+        const callButton = document.getElementById('option-call');
+        console.log('📞 Botón Llamar encontrado:', callButton);
+        callButton.addEventListener('click', handleCallClick);
+        console.log('✅ Event listener para Llamar agregado');
     }
 
     function createCallIndicator() {
@@ -417,8 +420,10 @@
     }
 
     async function handleCallClick() {
+        console.log('🚀 handleCallClick ejecutado - botón Llamar clickeado');
         toggleMenu();
         
+        console.log('vapiReady:', vapiReady);
         if (!vapiReady) {
             try {
                 await waitForVapi();
