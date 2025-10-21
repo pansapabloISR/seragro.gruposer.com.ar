@@ -482,7 +482,7 @@
     }
 
     // ==========================================
-    // INICIALIZAR VAPI (SIN UI)
+    // INICIALIZAR VAPI (WIDGET INVISIBLE)
     // ==========================================
     async function initializeVapi() {
         if (vapiInstance) return vapiInstance;
@@ -491,14 +491,20 @@
         await waitForVapi();
 
         try {
-            // Inicializar Vapi SIN config = sin botón por defecto
+            // Inicializar Vapi CON widget pero invisible (width/height = 0)
+            // El widget existe (por eso funciona audio/micrófono) pero no se ve
             vapiInstance = window.vapiSDK.run({
                 apiKey: CONFIG.vapiPublicKey,
-                assistant: CONFIG.vapiAssistantId
-                // NO pasar 'config' = no muestra botón
+                assistant: CONFIG.vapiAssistantId,
+                config: {
+                    width: "0px",
+                    height: "0px",
+                    position: "bottom-right",
+                    offset: "0px"
+                }
             });
 
-            console.log('✅ Vapi inicializado correctamente (sin UI por defecto)');
+            console.log('✅ Vapi inicializado con widget invisible');
             return vapiInstance;
         } catch (error) {
             console.error('❌ Error al inicializar Vapi:', error);
