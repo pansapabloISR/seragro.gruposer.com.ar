@@ -1,6 +1,9 @@
 (function() {
     'use strict';
 
+    // ==========================================
+    // CONFIGURACIÓN
+    // ==========================================
     const CONFIG = {
         whatsappPhone: '5493465432688',
         whatsappMessage: 'Hola, vengo desde el sitio de SER AGRO',
@@ -16,6 +19,9 @@
     let inCall = false;
     let vapiReady = false;
 
+    // ==========================================
+    // ESPERAR A QUE VAPI SE CARGUE
+    // ==========================================
     function waitForVapi(maxAttempts = 20, interval = 250) {
         return new Promise((resolve, reject) => {
             let attempts = 0;
@@ -23,13 +29,16 @@
             const checkVapi = setInterval(() => {
                 attempts++;
                 
+                // Debug: ver qué hay disponible en window
                 if (attempts === 1) {
-                    console.log('🔍 Buscando Vapi HTML Script Tag SDK...');
+                    console.log('🔍 Buscando Vapi SDK...');
+                    console.log('window.vapiSDK:', window.vapiSDK);
                 }
                 
+                // Chequear si vapiSDK está disponible (API oficial para HTML)
                 if (window.vapiSDK && typeof window.vapiSDK.run === 'function') {
                     clearInterval(checkVapi);
-                    console.log('✅ Vapi HTML Script Tag SDK cargado y listo');
+                    console.log('✅ Vapi SDK cargado y listo');
                     vapiReady = true;
                     resolve(true);
                 } else if (attempts >= maxAttempts) {
@@ -42,6 +51,9 @@
         });
     }
 
+    // ==========================================
+    // MOSTRAR/OCULTAR BOTÓN PRINCIPAL
+    // ==========================================
     function hideMainButton() {
         const button = document.getElementById('unified-contact-button');
         if (button) {
@@ -58,11 +70,15 @@
         }
     }
 
+    // Exponer API para que otros módulos puedan ocultar/mostrar el botón
     window.UnifiedContact = {
         hide: hideMainButton,
         show: showMainButton
     };
 
+    // ==========================================
+    // LIMPIEZA DE CACHÉ (se ejecuta primero)
+    // ==========================================
     function clearCacheAndServiceWorkers() {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
@@ -80,6 +96,9 @@
         }
     }
 
+    // ==========================================
+    // CREAR BOTÓN PRINCIPAL
+    // ==========================================
     function createMainButton() {
         const button = document.createElement('button');
         button.id = 'unified-contact-button';
@@ -97,6 +116,9 @@
         document.body.appendChild(button);
     }
 
+    // ==========================================
+    // CREAR MENÚ DE OPCIONES
+    // ==========================================
     function createOptionsMenu() {
         const menu = document.createElement('div');
         menu.id = 'unified-contact-menu';
@@ -126,14 +148,15 @@
         `;
         document.body.appendChild(menu);
 
+        // Agregar event listeners
         document.getElementById('option-whatsapp').addEventListener('click', handleWhatsAppClick);
         document.getElementById('option-chat').addEventListener('click', handleChatClick);
-        const callButton = document.getElementById('option-call');
-        console.log('📞 Botón Llamar encontrado:', callButton);
-        callButton.addEventListener('click', handleCallClick);
-        console.log('✅ Event listener para Llamar agregado');
+        document.getElementById('option-call').addEventListener('click', handleCallClick);
     }
 
+    // ==========================================
+    // CREAR INDICADOR DE LLAMADA
+    // ==========================================
     function createCallIndicator() {
         const indicator = document.createElement('div');
         indicator.id = 'call-indicator';
@@ -153,8 +176,12 @@
         document.getElementById('hang-up-button').addEventListener('click', endCall);
     }
 
+    // ==========================================
+    // AGREGAR ESTILOS CSS
+    // ==========================================
     function addStyles() {
         const styles = `
+            /* Botón principal */
             .unified-contact-main-button {
                 position: fixed;
                 bottom: 100px;
@@ -199,6 +226,7 @@
                 }
             }
 
+            /* Menú de opciones */
             .unified-contact-menu {
                 position: fixed;
                 bottom: 170px;
@@ -281,6 +309,7 @@
                 box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             }
 
+            /* Indicador de llamada */
             .call-indicator {
                 position: fixed;
                 bottom: 100px;
@@ -345,6 +374,7 @@
                 background: rgba(255,255,255,0.3);
             }
 
+            /* Ocultar widget de Vapi completamente */
             .vapi-btn,
             button[class*="vapi"],
             div[class*="vapi-widget"],
@@ -356,6 +386,7 @@
                 pointer-events: none !important;
             }
 
+            /* Responsive */
             @media (max-width: 480px) {
                 .unified-contact-main-button {
                     bottom: 80px;
@@ -390,6 +421,9 @@
         document.head.appendChild(styleSheet);
     }
 
+    // ==========================================
+    // TOGGLE MENÚ
+    // ==========================================
     function toggleMenu() {
         const button = document.getElementById('unified-contact-button');
         const menu = document.getElementById('unified-contact-menu');
@@ -405,6 +439,9 @@
         }
     }
 
+    // ==========================================
+    // HANDLERS DE OPCIONES
+    // ==========================================
     function handleWhatsAppClick() {
         const url = `https://api.whatsapp.com/send?phone=${CONFIG.whatsappPhone}&text=${encodeURIComponent(CONFIG.whatsappMessage)}`;
         window.open(url, '_blank');
@@ -413,17 +450,18 @@
 
     function handleChatClick() {
         toggleMenu();
+        // Ocultar botón principal
         hideMainButton();
+        // Invocar el chat de Mavilda
         if (window.MavildaChat && typeof window.MavildaChat.open === 'function') {
             window.MavildaChat.open();
         }
     }
 
     async function handleCallClick() {
-        console.log('🚀 handleCallClick ejecutado - botón Llamar clickeado');
         toggleMenu();
         
-        console.log('vapiReady:', vapiReady);
+        // Esperar a que Vapi esté disponible
         if (!vapiReady) {
             try {
                 await waitForVapi();
@@ -435,41 +473,29 @@
         }
 
         try {
-            console.log('🎯 Iniciando llamada con Vapi HTML Script Tag SDK...');
-            
-            vapiInstance = window.vapiSDK.run({
+            // Iniciar la llamada directamente con window.vapiSDK.run()
+            console.log('🎯 Iniciando llamada con Vapi...');
+            vapiInstance = await window.vapiSDK.run({
                 apiKey: CONFIG.vapiPublicKey,
-                assistantPublicIdentifier: CONFIG.vapiAssistantId,
+                assistant: CONFIG.vapiAssistantId,
                 config: {
-                    position: 'bottom-right',
-                    offset: '0px',
-                    width: '0px',
-                    height: '0px'
+                    transcriber: {
+                        provider: "deepgram",
+                        model: "nova-2",
+                        language: "es"
+                    }
                 }
             });
             
-            if (vapiInstance) {
-                vapiInstance.on('call-start', () => {
-                    console.log('✅ Llamada iniciada');
-                    inCall = true;
-                    const indicator = document.getElementById('call-indicator');
-                    const mainButton = document.getElementById('unified-contact-button');
-                    indicator.classList.add('active');
-                    mainButton.style.display = 'none';
-                });
-                
-                vapiInstance.on('call-end', () => {
-                    console.log('📞 Llamada finalizada');
-                    endCall();
-                });
-                
-                vapiInstance.on('error', (error) => {
-                    console.error('❌ Error en la llamada:', error);
-                    alert('Ocurrió un error durante la llamada.');
-                    endCall();
-                });
-            }
+            inCall = true;
             
+            // Mostrar indicador de llamada y ocultar botón principal
+            const indicator = document.getElementById('call-indicator');
+            const mainButton = document.getElementById('unified-contact-button');
+            indicator.classList.add('active');
+            mainButton.style.display = 'none';
+            
+            console.log('✅ Llamada iniciada correctamente');
         } catch (error) {
             console.error('❌ Error al iniciar llamada:', error);
             alert('No se pudo iniciar la llamada. Por favor, intentá de nuevo.');
@@ -477,12 +503,10 @@
     }
 
     function endCall() {
-        if (vapiInstance) {
+        if (vapiInstance && inCall) {
             try {
-                if (typeof vapiInstance.stop === 'function') {
-                    vapiInstance.stop();
-                    console.log('✅ Llamada detenida');
-                }
+                vapiInstance.stop();
+                console.log('✅ Llamada detenida');
             } catch (error) {
                 console.error('❌ Error al detener llamada:', error);
             }
@@ -490,18 +514,24 @@
             vapiInstance = null;
             inCall = false;
             
+            // Ocultar indicador de llamada
             const indicator = document.getElementById('call-indicator');
             const mainButton = document.getElementById('unified-contact-button');
             indicator.classList.remove('active');
             mainButton.style.display = 'flex';
             
-            console.log('✅ UI restaurada');
+            console.log('✅ Llamada finalizada');
         }
     }
 
+    // ==========================================
+    // INICIALIZACIÓN
+    // ==========================================
     function init() {
+        // Limpiar caché primero
         clearCacheAndServiceWorkers();
         
+        // Crear elementos
         createMainButton();
         createOptionsMenu();
         createCallIndicator();
@@ -510,6 +540,7 @@
         console.log('✅ Sistema de comunicación unificado cargado correctamente');
     }
 
+    // Ejecutar cuando el DOM esté listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
