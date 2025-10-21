@@ -473,18 +473,10 @@
         }
 
         try {
-            // Iniciar la llamada directamente con window.vapiSDK.run()
             console.log('🎯 Iniciando llamada con Vapi...');
-            vapiInstance = await window.vapiSDK.run({
+            vapiInstance = window.vapiSDK.run({
                 apiKey: CONFIG.vapiPublicKey,
-                assistant: CONFIG.vapiAssistantId,
-                config: {
-                    transcriber: {
-                        provider: "deepgram",
-                        model: "nova-2",
-                        language: "es"
-                    }
-                }
+                assistant: CONFIG.vapiAssistantId
             });
             
             inCall = true;
