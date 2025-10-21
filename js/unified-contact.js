@@ -29,22 +29,18 @@
             const checkVapi = setInterval(() => {
                 attempts++;
                 
-                // Debug: ver qué hay disponible en window
                 if (attempts === 1) {
-                    console.log('🔍 Buscando Vapi SDK...');
-                    console.log('window.vapiSDK:', window.vapiSDK);
+                    console.log('🔍 Buscando Vapi Web SDK...');
                 }
                 
-                // Chequear si vapiSDK está disponible (API oficial para HTML)
-                if (window.vapiSDK && typeof window.vapiSDK.run === 'function') {
+                if (window.Vapi && typeof window.Vapi === 'function') {
                     clearInterval(checkVapi);
-                    console.log('✅ Vapi SDK cargado y listo');
+                    console.log('✅ Vapi Web SDK cargado y listo');
                     vapiReady = true;
                     resolve(true);
                 } else if (attempts >= maxAttempts) {
                     clearInterval(checkVapi);
                     console.error('❌ Timeout esperando Vapi SDK');
-                    console.log('Claves disponibles en window:', Object.keys(window).filter(k => k.toLowerCase().includes('vap')));
                     reject(new Error('Vapi SDK no disponible'));
                 }
             }, interval);
@@ -461,7 +457,6 @@
     async function handleCallClick() {
         toggleMenu();
         
-        // Esperar a que Vapi esté disponible
         if (!vapiReady) {
             try {
                 await waitForVapi();
@@ -473,21 +468,32 @@
         }
 
         try {
-            console.log('🎯 Iniciando llamada con Vapi...');
-            vapiInstance = window.vapiSDK.run({
-                apiKey: CONFIG.vapiPublicKey,
-                assistant: CONFIG.vapiAssistantId
+            console.log('🎯 Iniciando llamada con Vapi Web SDK...');
+            
+            vapiInstance = new window.Vapi(CONFIG.vapiPublicKey);
+            
+            vapiInstance.on('call-start', () => {
+                console.log('✅ Llamada iniciada correctamente');
+                inCall = true;
+                const indicator = document.getElementById('call-indicator');
+                const mainButton = document.getElementById('unified-contact-button');
+                indicator.classList.add('active');
+                mainButton.style.display = 'none';
             });
             
-            inCall = true;
+            vapiInstance.on('call-end', () => {
+                console.log('✅ Llamada finalizada');
+                endCall();
+            });
             
-            // Mostrar indicador de llamada y ocultar botón principal
-            const indicator = document.getElementById('call-indicator');
-            const mainButton = document.getElementById('unified-contact-button');
-            indicator.classList.add('active');
-            mainButton.style.display = 'none';
+            vapiInstance.on('error', (error) => {
+                console.error('❌ Error en la llamada:', error);
+                alert('Ocurrió un error durante la llamada.');
+                endCall();
+            });
             
-            console.log('✅ Llamada iniciada correctamente');
+            await vapiInstance.start(CONFIG.vapiAssistantId);
+            
         } catch (error) {
             console.error('❌ Error al iniciar llamada:', error);
             alert('No se pudo iniciar la llamada. Por favor, intentá de nuevo.');
