@@ -439,7 +439,7 @@
             
             vapiInstance = window.vapiSDK.run({
                 apiKey: CONFIG.vapiPublicKey,
-                assistant: CONFIG.vapiAssistantId,
+                assistantPublicIdentifier: CONFIG.vapiAssistantId,
                 config: {
                     position: 'bottom-right',
                     offset: '0px',
