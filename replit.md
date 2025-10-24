@@ -148,3 +148,14 @@ Preferred communication style: Simple, everyday language.
 - Changed Mavilda agent image to "mavilda ingeniera agronoma.png"
 - Fixed mobile/desktop cache issues with file renaming and meta tags
 - Fixed CSS !important override issue in style.css for mobile button positioning
+
+### Android Production Rendering Fix (Oct 24, 2025)
+- **Call Indicator Overflow Fix**: Resolved Android-specific clipping issue in production
+  - Added `max-width: calc(100vw - 40px)` to desktop call indicator with `box-sizing: border-box`
+  - Enforced `max-width: calc(100vw - 30px)` across mobile breakpoint (prevents overflow)
+  - Changed button design: white solid background with red text for better visibility
+  - Protected button with `flex-shrink: 0` and `white-space: nowrap` to prevent compression
+  - Made text flexible with `flex-shrink: 1` and ellipsis truncation
+  - Reduced spacing on mobile: padding (10px 14px), gap (8px), smaller pulse dot (10px)
+  - Optimized button on mobile: padding (6px 12px), font-size (11px)
+  - Root cause: Roboto font on Android is wider than SF Pro on iOS, production build lacked max-width constraints
