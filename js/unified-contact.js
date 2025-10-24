@@ -381,13 +381,15 @@ function addStyles() {
             border: 2px solid white;
             color: white;
             border-radius: 25px;
-            padding: 8px 20px;
-            margin-left: 12px;
+            padding: 8px 16px;
+            margin-left: 8px;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
             transition: all 0.3s ease;
             font-family: 'Open Sans', sans-serif;
+            flex-shrink: 0;
+            min-width: fit-content;
         }
 
         .end-call-btn:hover {
