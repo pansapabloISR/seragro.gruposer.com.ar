@@ -340,14 +340,17 @@ function addStyles() {
             background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
             color: white;
             border-radius: 50px;
-            padding: 16px 28px;
+            padding: 16px 20px;
             box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
             display: none;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             z-index: 9999;
             font-family: 'Open Sans', sans-serif;
             font-weight: 600;
+            max-width: calc(100vw - 40px);
+            white-space: nowrap;
+            overflow: visible;
         }
 
         .call-indicator.active {
