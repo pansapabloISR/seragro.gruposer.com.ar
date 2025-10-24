@@ -1,0 +1,254 @@
+# 🔧 Instrucciones para Replit: Arreglar botón "Colgar" cortado en Android
+
+## 📋 Contexto
+El botón "Colgar" del indicador de llamada se ve cortado **solo en Android**. En iPhone y Windows funciona perfectamente. Solo necesitamos ajustar el CSS del componente de llamada sin tocar nada más.
+
+---
+
+## ✅ Archivo a Modificar
+**Archivo único:** `js/unified-contact.js`
+
+**Secciones a modificar:** Solo el CSS dentro de la función `addStyles()` (líneas 158-365 aproximadamente)
+
+---
+
+## 🎯 Paso a Paso para Replit
+
+### **PASO 1: Localizar la función `addStyles()`**
+- Abrir archivo: `js/unified-contact.js`
+- Buscar la función que empieza con: `function addStyles() {`
+- Dentro hay un template string con todo el CSS: `` const styles = `...` ``
+
+---
+
+### **PASO 2: Encontrar el bloque `.call-indicator`**
+Buscar estas líneas exactas:
+```javascript
+.call-indicator {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    color: white;
+    border-radius: 50px;
+    padding: 16px 28px;
+    box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
+    display: none;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+```
+
+**REEMPLAZAR CON:**
+```javascript
+.call-indicator {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    color: white;
+    border-radius: 50px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
+    display: none;
+    align-items: center;
+    gap: 8px;
+    z-index: 9999;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    max-width: calc(100vw - 40px);
+    white-space: nowrap;
+    overflow: visible;
+}
+```
+
+**Cambios aplicados:**
+- `padding: 16px 28px` → `padding: 16px 20px` (menos padding derecho)
+- `gap: 12px` → `gap: 8px` (menos espacio entre elementos)
+- Agregadas 3 líneas nuevas al final para evitar desbordamiento
+
+---
+
+### **PASO 3: Encontrar el bloque `.end-call-btn`**
+Buscar estas líneas exactas:
+```javascript
+.end-call-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    border-radius: 25px;
+    padding: 8px 20px;
+    margin-left: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: 'Open Sans', sans-serif;
+}
+```
+
+**REEMPLAZAR CON:**
+```javascript
+.end-call-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    border-radius: 25px;
+    padding: 8px 16px;
+    margin-left: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    font-family: 'Open Sans', sans-serif;
+    flex-shrink: 0;
+    min-width: fit-content;
+}
+```
+
+**Cambios aplicados:**
+- `padding: 8px 20px` → `padding: 8px 16px` (botón más compacto)
+- `margin-left: 12px` → `margin-left: 8px` (menos espacio)
+- Agregadas 2 líneas nuevas al final para evitar que se comprima
+
+---
+
+### **PASO 4: Encontrar el media query de móviles**
+Buscar esta sección:
+```javascript
+@media (max-width: 768px) {
+    .unified-contact-main-button {
+        bottom: 80px;
+        right: 15px;
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+
+    .unified-contact-menu {
+        bottom: 160px;
+        right: 15px;
+    }
+
+    .contact-option {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    .call-indicator {
+        bottom: 80px;
+        right: 15px;
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+}
+```
+
+**REEMPLAZAR el bloque de `.call-indicator` dentro del media query CON:**
+```javascript
+    .call-indicator {
+        bottom: 80px;
+        right: 15px;
+        padding: 14px 18px;
+        gap: 6px;
+        font-size: 14px;
+        border-radius: 40px;
+    }
+
+    .end-call-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+        margin-left: 6px;
+    }
+
+    .pulse-dot {
+        width: 10px;
+        height: 10px;
+    }
+```
+
+**Cambios aplicados:**
+- Ajustados todos los tamaños para móviles
+- Agregado bloque `.end-call-btn` específico para móviles
+- Agregado bloque `.pulse-dot` para reducir el punto pulsante
+
+---
+
+## ⚠️ IMPORTANTE: Verificación
+
+### **Después de hacer los cambios:**
+
+1. **Guardar el archivo** `js/unified-contact.js`
+
+2. **Reiniciar el servidor:**
+   - Usar el botón "Restart" en Replit
+   - O ejecutar: `restart_workflow("Server")`
+
+3. **Limpiar caché en Android:**
+   - Abrir Chrome en Android
+   - Ir a Configuración → Privacidad → Borrar datos de navegación
+   - Seleccionar "Imágenes y archivos en caché"
+   - Hacer clic en "Borrar datos"
+
+4. **Probar en Android:**
+   - Abrir el sitio en Chrome Android
+   - Hacer clic en el botón principal verde
+   - Seleccionar "Llamar"
+   - Verificar que el indicador rojo muestre completo el botón "Colgar"
+
+---
+
+## 🎯 Resultado Esperado
+
+**Antes (Android):**
+```
+[🔴 En llamada... | Colg-] ← Cortado
+```
+
+**Después (Android):**
+```
+[🔴 En llamada... | Colgar] ← Completo
+```
+
+---
+
+## 🔒 Archivos NO Modificar
+
+✅ **NO tocar ninguno de estos archivos:**
+- `style.css`
+- `main-app.js`
+- `js/mavilda-chat.js`
+- Ningún archivo HTML
+- `server.py`
+- `vite.config.js`
+
+❌ **Solo modificar:** `js/unified-contact.js` (secciones indicadas)
+
+---
+
+## 📊 Resumen de Cambios
+
+| Elemento | Antes | Después | Razón |
+|----------|-------|---------|-------|
+| `.call-indicator` padding | `16px 28px` | `16px 20px` | Menos espacio derecho |
+| `.call-indicator` gap | `12px` | `8px` | Elementos más juntos |
+| `.end-call-btn` padding | `8px 20px` | `8px 16px` | Botón más compacto |
+| `.end-call-btn` margin | `12px` | `8px` | Menos espacio izquierdo |
+| Móviles `.call-indicator` | `14px 24px` | `14px 18px` | Ajuste específico Android |
+
+---
+
+## 🆘 Si Algo Sale Mal
+
+**Si después de los cambios algo no funciona:**
+
+1. Verificar que solo se modificó `js/unified-contact.js`
+2. Revisar que no se hayan borrado llaves `{` o comillas `` ` ``
+3. Comprobar que el CSS sigue dentro del template string (entre backticks)
+4. Reiniciar el workflow: `restart_workflow("Server")`
+
+---
+
+**¿Todo claro para proceder con los cambios?** 🚀
