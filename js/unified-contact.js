@@ -425,8 +425,21 @@ function addStyles() {
             .call-indicator {
                 bottom: 80px;
                 right: 15px;
-                padding: 14px 24px;
-                font-size: 15px;
+                padding: 14px 18px;
+                gap: 6px;
+                font-size: 14px;
+                border-radius: 40px;
+            }
+
+            .end-call-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+                margin-left: 6px;
+            }
+
+            .pulse-dot {
+                width: 10px;
+                height: 10px;
             }
         }
     `;
