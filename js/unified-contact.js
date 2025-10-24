@@ -340,14 +340,16 @@ function addStyles() {
             background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
             color: white;
             border-radius: 50px;
-            padding: 16px 28px;
+            padding: 12px 20px;
             box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
             display: none;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             z-index: 9999;
             font-family: 'Open Sans', sans-serif;
             font-weight: 600;
+            max-width: calc(100vw - 40px);
+            box-sizing: border-box;
         }
 
         .call-indicator.active {
@@ -374,22 +376,31 @@ function addStyles() {
         }
 
         .end-call-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
+            background: white;
+            border: none;
+            color: #d32f2f;
             border-radius: 25px;
-            padding: 8px 20px;
-            margin-left: 12px;
+            padding: 8px 18px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s ease;
             font-family: 'Open Sans', sans-serif;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .end-call-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: #f5f5f5;
             transform: scale(1.05);
+        }
+        
+        .call-indicator > span {
+            flex-shrink: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .vapi-btn {
@@ -420,8 +431,20 @@ function addStyles() {
             .call-indicator {
                 bottom: 80px;
                 right: 15px;
-                padding: 14px 24px;
-                font-size: 15px;
+                padding: 10px 14px;
+                font-size: 13px;
+                max-width: calc(100vw - 30px);
+                gap: 8px;
+            }
+            
+            .end-call-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+            
+            .pulse-dot {
+                width: 10px;
+                height: 10px;
             }
         }
     `;
